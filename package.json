@@ -1,0 +1,32 @@
+{
+  "name": "line-and-chagpt-bot-with-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "line-bot.js",
+  "scripts": {
+    "start": "nodemon line-bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whereishikaru/LINE-and-chaGPT-bot-with-JS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whereishikaru/LINE-and-chaGPT-bot-with-JS/issues"
+  },
+  "homepage": "https://github.com/whereishikaru/LINE-and-chaGPT-bot-with-JS#readme",
+  "dependencies": {
+    "@line/bot-sdk": "^7.5.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "linebot": "^1.6.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20"
+  }
+}
