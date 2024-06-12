@@ -77,3 +77,9 @@ router.delete('/:id', async (req, res) => {
 });
 
 export default router;
+
+
+// Test with Curl:
+// curl -X PUT -H "Content-Type: application/json" \
+//      -d '{"name": "Hikaru A", "bio": "Hello!"}' \
+//      http://localhost:3000/user/1
