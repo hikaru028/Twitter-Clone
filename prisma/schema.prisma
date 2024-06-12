@@ -29,13 +29,14 @@ model User {
 }
 
 model Tweet {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  constent   String
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  content    String
   image      String?
-  comment    String
-  impression Int      @default(0)
+  comment    String?
+  impression Int     @default(0)
 
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id])
