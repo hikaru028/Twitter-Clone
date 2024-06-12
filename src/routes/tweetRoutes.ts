@@ -1,23 +1,32 @@
 import { Router } from 'express'
+// Tweet CRUD
 
 const router = Router();
 
-router.get('/', (req, res) => { // A customer need to GET info, 
-    res.send('Hello!'); // then the server responds to send " hello!" 
-});
-
-// Create user
-router.post('/user', (req, res) => {
+// Create tweet
+router.post('/', (req, res) => {
     res.status(501).json({ error: "Not Implemented"})
 });
 
-// List users
-router.get('/user', (req, res) => {
+// List tweets
+router.get('/', (req, res) => {
     res.status(501).json({ error: "Not Implemented"})
 });
 
-// Retrieve a user
-router.get('/user/:id', (req, res) => {
+// Retrieve a tweet
+router.get('/:id', (req, res) => {
+    const { id } =req.params;
+    res.status(501).json({ error: `Not Implemented: ${id}`})
+});
+
+// Update a tweet
+router.put('/:id', (req, res) => {
+    const { id } =req.params;
+    res.status(501).json({ error: `Not Implemented: ${id}`})
+});
+
+// Delete a tweet
+router.delete('/:id', (req, res) => {
     const { id } =req.params;
     res.status(501).json({ error: `Not Implemented: ${id}`})
 });
