@@ -1,11 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-
-// Import routes
+// Routes
 import authRoute from './routes/auth.js';
-
-// Connect to MongoDB
+import userRoute from './routes/user.js'
+// Database(MongoDB)
 import connectMongoDB from './db/connectMongoDB.js';
 
 // Load environment variables from .env file
@@ -20,8 +19,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Use routes
+// Use routes imported
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
 // Start server and connect to database
 app.listen(port, () => {
