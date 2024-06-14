@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import { v2 as cloudinary } from 'cloudinary';
 // Routes
 import authRoute from './routes/auth.js';
 import userRoute from './routes/user.js'
@@ -9,6 +10,14 @@ import connectMongoDB from './db/connectMongoDB.js';
 
 // Load environment variables from .env file
 dotenv.config();
+
+
+// Connect to my Cloudinary account
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // Create Express app
 const app = express();
