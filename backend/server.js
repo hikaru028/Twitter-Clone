@@ -4,8 +4,9 @@ import cookieParser from 'cookie-parser';
 import { v2 as cloudinary } from 'cloudinary';
 // Routes
 import authRoute from './routes/auth.js';
-import userRoute from './routes/user.js'
+import userRoute from './routes/user.js';
 import postRoute from './routes/post.js';
+import NotificationRoute from './routes/notification.js';
 // Database(MongoDB)
 import connectMongoDB from './db/connectMongoDB.js';
 
@@ -33,6 +34,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/notifications", NotificationRoute)
 
 // Start server and connect to database
 app.listen(port, () => {
