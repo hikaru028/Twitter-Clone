@@ -3,7 +3,6 @@ import { v2 as cloudinary } from 'cloudinary';
 import User from '../models/userSchema.js';
 import Notification from '../models/notificationSchema.js';
 import passwordSchema from '../models/passwordSchema.js';
-import { generateTokenAndSetCoolie } from '../lib/utils/generateToken.js';
 
 export const getUserProfile = async (req, res) => {
     const { username } = req.params;
@@ -86,7 +85,6 @@ export const followUnfollowUser = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 
 export const updateUserProfile = async (req, res) => {
     try {
