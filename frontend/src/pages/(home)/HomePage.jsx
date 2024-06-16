@@ -1,6 +1,14 @@
+import Navigation from '../../components/home/Navigation'
+import Middle from '../../components/home/Middle'
+import RightPanel from '../../components/home/RightPanel'
+
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div className='flex justify-between'>
+      <Navigation />
+      <Middle />
+      <RightPanel />
+    </div>
   )
 }
 

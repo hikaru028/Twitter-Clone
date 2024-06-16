@@ -16,13 +16,21 @@
 body {
   margin: 0;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100vh;  
 }
 
 .label {
   @apply input input-bordered rounded flex items-center gap-2 w-full;
 }
 
-/* .input {
-  @apply text-xl min-w-[250px] px-6 py-2 ml-4;
-} */
+.nav-list {
+  @apply flex justify-center md:justify-start;
+}
+
+.nav-link {
+  @apply flex flex-row gap-3 justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 py-4 pl-4 pr-4 md:pr-8 max-w-fit cursor-pointer;
+}
+
+.nav-text {
+  @apply text-3xl hidden md:block ml-4;
+}

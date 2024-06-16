@@ -120,7 +120,7 @@ const SignUpForm = () => {
       </div>
 
       {/* Submit button */}
-      <button type="submit" className=' w-full btn rounded-full btn-primary text-white'>
+      <button type="submit" to="/login" className=' w-full btn rounded-full btn-primary text-white'>
         {isLoading ? 'Loading...' : 'Sign up'}
       </button>
       {isError && <p className='text-red-500'>Something went wrong</p>}
