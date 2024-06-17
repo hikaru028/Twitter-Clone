@@ -1,4 +1,4 @@
-import PostGenerator from './PostGenerator'
+import PostGenerator from './generator/PostGenerator'
 
 const Post = () => {
   return (

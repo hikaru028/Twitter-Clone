@@ -1,15 +1,41 @@
-import Navigation from '../../components/home/Navigation'
-import Middle from '../../components/home/Middle'
-import RightPanel from '../../components/home/RightPanel'
+import { useState } from 'react'
+import CreateNewPost from '../../components/posts/CreateNewPost';
+import PostsSection from '../../components/home/PostsSection'
 
 const HomePage = () => {
-  return (
-    <div className='flex justify-between'>
-      <Navigation />
-      <Middle />
-      <RightPanel />
-    </div>
-  )
+    const [feedType, setFeedType] = useState('for You');
+
+    return (
+        <div className='flex-[4_4_0] mr-auto border-r border-gray-700 min-h-screen'>
+              {/* Header */}
+              <div className='flex w-full h-16 items-center border-b border-secondary '>
+                  <div
+                    className={`flex justify-center flex-1 p-5 hover:bg-secondary transition duration-300 cursor-pointer relative text-xl ${feedType === "for You" ? 'font-black' : 'font-semibold'}`}
+                    onClick={() => setFeedType("for You")}
+                  >
+                    For you
+                    {feedType === "for You" && (
+                      <div className='absolute bottom-0 w-[60px] h-[4px] rounded-full bg-primary'></div>
+                    )}
+                  </div>
+                  <div
+                    className={`flex justify-center flex-1 p-5 hover:bg-secondary transition duration-300 cursor-pointer relative text-xl ${feedType === "following" ? 'font-black' : 'font-semibold'}`}
+                    onClick={() => setFeedType("following")}
+                  >
+                    Following
+                    {feedType === "following" && (
+                      <div className='absolute bottom-0 w-[82px]  h-[4px] rounded-full bg-primary'></div>
+                    )}
+                  </div>
+              </div>
+
+              {/* Create a post */}
+              <CreateNewPost />
+
+              {/* All Posts */}
+              <PostsSection />
+        </div>
+    )
 }
 
 export default HomePage
