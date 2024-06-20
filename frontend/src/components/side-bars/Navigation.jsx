@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
-// import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import UserPanel from '../user/UserPanel'
-
 // Icons
 import { MdHomeFilled, MdOutlineMailOutline } from 'react-icons/md'
 import { PiMagnifyingGlass } from "react-icons/pi"
@@ -12,13 +11,7 @@ import { BsPerson, BsPeople } from "react-icons/bs";
 import { FaXTwitter } from "react-icons/fa6";
 
 const Navigation = () => {
-    // const { data: authUser } = useQuery({ queryKey: ["authUser"] });
-    const authUser = {
-        email: 'user@example.com',
-        username: 'hikaru',
-        fullName: 'Hikaru Suzuki',
-        profileImg: '../../../public/avatars/boy1.png',
-    };
+    const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
     const naviList = [
         { icon: MdHomeFilled, path: '/', text: 'Home' },
@@ -60,7 +53,7 @@ const Navigation = () => {
                 </li>  
             </ul>
             {/* User panel */}
-            <UserPanel authUser={authUser} />
+            <UserPanel />
         </div>
     </div>
   )

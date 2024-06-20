@@ -8,9 +8,9 @@ const HomePage = () => {
     return (
         <div className='flex-[4_4_0] mr-auto border-r border-gray-700 lg:min-w-[600px] min-h-screen'>
               {/* Header */}
-              <div className='flex w-full h-16 items-center border-b border-secondary '>
+              <div className='flex w-full h-16 items-center border-b border-gray-700'>
                   <div
-                    className={`flex justify-center flex-1 p-5 hover:bg-secondary transition duration-300 cursor-pointer relative text-xl ${feedType === "for You" ? 'font-black' : 'font-semibold'}`}
+                    className={`flex justify-center flex-1 p-5 hover:bg-secondary transition duration-300 cursor-pointer relative text-xl ${feedType === "for You" ? 'font-black text-white' : 'font-semibold text-gray-700'}`}
                     onClick={() => setFeedType("for You")}
                   >
                     For you
@@ -19,7 +19,7 @@ const HomePage = () => {
                     )}
                   </div>
                   <div
-                    className={`flex justify-center flex-1 p-5 hover:bg-secondary transition duration-300 cursor-pointer relative text-xl ${feedType === "following" ? 'font-black' : 'font-semibold'}`}
+                    className={`flex justify-center flex-1 p-5 hover:bg-secondary transition duration-300 cursor-pointer relative text-xl ${feedType === "following" ? 'font-black text-white' : 'font-semibold text-gray-700'}`}
                     onClick={() => setFeedType("following")}
                   >
                     Following
