@@ -44,30 +44,35 @@ const UserPanel = () => {
         }
     });
                 
-    const { data: authUser } = useQuery({ queryKey: ['authUser'] });
+    // const { data: authUser } = useQuery({ queryKey: ['authUser'] });
+    const authUser = {
+        username: 'hikaru',
+        fullName: 'Hikaru Suzuki',
+        profileImg: '../../../public/avatars/boy1.png'
+    };
 
   return (
     <>
         {authUser && (
             <div className='relative inline-block mt-12 mb-4 '>
                 {/* user section */}
-                <Link
-                    onClick={togglePopup}
-                    className='flex flex-row justify-start items-center w-[60px] md:w-[250px]  md:hover:bg-stone-900 transition-all rounded-full duration-200 md:py-4 md:px-4  cursor-pointer z-0'
-                >
-                    <div className='avatar md:inline-flex'>
-                        <div className='w-16 rounded-full'>
-                            <img src={authUser?.profileImg || '../../../public/avatars/boy1.png'} />
+                <div className='w-auto h-auto flex justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 p-4  cursor-pointer z-0'>
+                    <Link
+                        onClick={togglePopup}
+                        className='flex flex-row justify-between items-center md:w-[230px] '
+                    >
+                        <div className='avatar md:inline-flex'>
+                            <div className='w-12 rounded-full'>
+                                <img src={authUser?.profileImg || '../../../public/avatars/boy1.png'} />
+                            </div>
                         </div>
-                    </div>
-                    <div className='flex flex-row items-center justify-between ml-4'>
-                        <div className='hidden md:block mr-2'>
-                            <p className='text-white font-bold text-xl w-[120px] truncate'>{authUser?.fullName}</p>
-                            <p className='text-slate-500 text-xl'>@{authUser?.username}</p>
-                        </div>
-                        <RiMoreFill className='hidden md:block w-7 h-7 font-semibold cursor-pointer' />
-                    </div>
-                </Link>
+                            <div className='hidden md:block mr-2'>
+                                <p className='text-white font-bold text-xl max-w-[120px] truncate'>{authUser?.fullName}</p>
+                                <p className='text-slate-500 text-xl'>@{authUser?.username}</p>
+                            </div>
+                            <RiMoreFill className='hidden md:block w-6 h-6 font-semibold cursor-pointer' />    
+                    </Link>
+                </div>
         
                 {/* Popup */}
                 <div id='popup' className='hidden absolute bottom-[90px] -left-11 z-20'>

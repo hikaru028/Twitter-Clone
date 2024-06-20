@@ -28,9 +28,9 @@ body {
 }
 
 .nav-link {
-  @apply flex flex-row gap-3 justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 py-4 pl-4 pr-4 md:pr-8 max-w-fit cursor-pointer;
+  @apply flex flex-row gap-2 justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 py-3 pl-4 pr-4 md:pr-8 max-w-fit cursor-pointer;
 }
 
 .nav-text {
-  @apply text-3xl hidden md:block ml-4;
+  @apply text-2xl font-medium hidden md:block ml-4;
 }

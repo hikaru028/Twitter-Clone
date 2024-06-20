@@ -14,17 +14,11 @@ const SignUpForm = () => {
   });
 
   const queryClient = useQueryClient();
-  const { mutate, isError, isLoading, error } = useMutation({
-    mutationFn: async ({ email, username, fullName, password, confirmPassword }) => {
-      if (password !== confirmPassword) {
-        throw new Error(error.message || 'Password is incorrect')
-      }
-
+  const { mutate: signUpMutation, isError, isLoading } = useMutation({
+    mutationFn: async ({ email, username, fullName, password }) => {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ email, username, fullName, password }),
       });
 
@@ -45,7 +39,11 @@ const SignUpForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    mutate(formData);
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+    signUpMutation(formData);
   };
 
   const handleInputChange = (event) => {
@@ -92,6 +90,7 @@ const SignUpForm = () => {
           />
         </label>
       </div>
+
       <div className='flex gap-4 flex-wrap'>
         {/* Password */}
         <label className='label'>

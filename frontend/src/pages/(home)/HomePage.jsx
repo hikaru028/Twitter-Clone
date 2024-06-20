@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import CreateNewPost from '../../components/posts/CreateNewPost';
-import PostsSection from '../../components/home/PostsSection'
+import PostsSection from '../../components/posts/PostsSection'
 
 const HomePage = () => {
     const [feedType, setFeedType] = useState('for You');
@@ -33,7 +33,7 @@ const HomePage = () => {
               <CreateNewPost />
 
               {/* All Posts */}
-              <PostsSection />
+              <PostsSection feedType={feedType} />
         </div>
     )
 }
