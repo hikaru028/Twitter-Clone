@@ -5,11 +5,11 @@ import { generateTokenAndSetCoolie } from '../lib/utils/generateToken.js';
 
 export const signup = async (req, res) => {
     try {
-        // console.log('Headers:', req.headers); // Log headers
-        // console.log('Content-Type:', req.get('Content-Type')); // Log Content-Type
-        // console.log('Request body:', req.body); // Log the entire request bod
+        console.log('Headers:', req.headers); // Log headers
+        console.log('Content-Type:', req.get('Content-Type')); // Log Content-Type
+        console.log('Request body:', req.body); // Log the entire request bod
 
-        const { fullName, username, email, password } = req.body;
+        const { email, username, fullName, password } = req.body;
 
         // Check username existence
         const existingUser = await User.findOne({ username });
@@ -33,7 +33,7 @@ export const signup = async (req, res) => {
         const validationErrors = passwordSchema.validate(password, { list: true });
         if (validationErrors.length > 0) {
             const errorMessages = getPasswordErrorMessage(validationErrors);
-            return res.status(400).json({ error: errorMessages.join(' ') });
+            return res.status(400).json({ error: errorMessages.join('') });
         }
 
         // Hash password
@@ -42,9 +42,9 @@ export const signup = async (req, res) => {
 
         // Create new user
         const newUser = new User({
-            fullName,
-            username,
-            email,
+            email: email,
+            fullName: fullName,
+            username: username,
             password: hashedPassword,
         });
 

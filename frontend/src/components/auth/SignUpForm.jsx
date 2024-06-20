@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
-import { MdOutlineMail, MdPassword, MdDriveFileRenameOutline } from 'react-icons/md';
-import { FaUser } from 'react-icons/fa';
+import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
+import { MdOutlineMail, MdPassword, MdDriveFileRenameOutline } from 'react-icons/md'
+import { FaUser } from 'react-icons/fa'
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -10,23 +10,27 @@ const SignUpForm = () => {
     username: '',
     fullName: '',
     password: '',
-    confirmPassword: '',
   });
+  const [confirmPassword, setConfirmPassword] = useState();
 
   const queryClient = useQueryClient();
-  const { mutate: signUpMutation, isError, isLoading } = useMutation({
+  const { mutate: signUpMutation, isError, isLoading, error } = useMutation({
     mutationFn: async ({ email, username, fullName, password }) => {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ email, username, fullName, password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || 'Failed to create an account');
-      console.log(data);
-      return data;
+      try {
+        const res = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ email, username, fullName, password }),
+        });
+        
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Failed to create an account');
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error(error);
+        throw new Error(error);
+      }
     },
     onSuccess: () => {
       toast.success('Account created successfully');
@@ -39,7 +43,7 @@ const SignUpForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== confirmPassword) {
       toast.error('Passwords do not match');
       return;
     }
@@ -110,19 +114,19 @@ const SignUpForm = () => {
           <input 
             type='password' 
             name='confirmPassword' 
-            value={formData.confirmPassword} 
+            value={confirmPassword} 
             placeholder='Confirm Password' 
-            onChange={handleInputChange} 
+            onChange={(e) => setConfirmPassword(e.target.value)} 
             className='grow' 
           />
         </label>
       </div>
 
       {/* Submit button */}
-      <button type="submit" to="/login" className=' w-full btn rounded-full btn-primary text-white'>
+      <button className='w-full btn rounded-full btn-primary text-white'>
         {isLoading ? 'Loading...' : 'Sign up'}
       </button>
-      {isError && <p className='text-red-500'>Something went wrong</p>}
+      {isError && <p className='text-red-500'>{error.message}</p>}
     </form>
   );
 };

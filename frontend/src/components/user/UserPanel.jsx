@@ -8,21 +8,6 @@ const UserPanel = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     
-    const togglePopup = (e) => {
-        e.preventDefault();
-        const popup = document.getElementById('popup');
-        
-        if (popup.style.display === 'none' || popup.style.display === '') {
-          popup.style.display = 'block';
-        } else {
-          popup.style.display = 'none';
-        }
-    };
-
-    const renderLoginPage = () => {
-        navigate('/login');
-    };
-
     const { mutate: logout } = useMutation({
         mutationFc: async () => {
             try {
@@ -44,15 +29,25 @@ const UserPanel = () => {
         }
     });
                 
-    // const { data: authUser } = useQuery({ queryKey: ['authUser'] });
-    const authUser = {
-        username: 'hikaru',
-        fullName: 'Hikaru Suzuki',
-        profileImg: '../../../public/avatars/boy1.png'
+    const { data: authUser } = useQuery({ queryKey: ['authUser'] });
+
+    const togglePopup = (e) => {
+        e.preventDefault();
+        const popup = document.getElementById('popup');
+        
+        if (popup.style.display === 'none' || popup.style.display === '') {
+          popup.style.display = 'block';
+        } else {
+          popup.style.display = 'none';
+        }
+    };
+
+    const renderLoginPage = () => {
+        navigate('/login');
     };
 
   return (
-    <>
+      <>
         {authUser && (
             <div className='relative inline-block mt-12 mb-4 '>
                 {/* user section */}
@@ -91,7 +86,7 @@ const UserPanel = () => {
 								}}
                                 className='text-xl font-extrabold hover:bg-stone-900 transition-all duration-200 py-3 px-4 cursor-pointer'
                             >
-                                Log out of @username
+                                Log out of @{authUser?.username}
                             </li>
                         </ul>
                     </div>

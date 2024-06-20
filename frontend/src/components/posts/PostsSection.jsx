@@ -59,7 +59,6 @@ const PostsSection = ({ feedType }) => {
             {!isLoading && !isRefetching && posts && (
                 <div>
                     {posts.map((post) => (
-
                         <PostGenerator key={post._id} post={post} />
                     ))}
                 </div>

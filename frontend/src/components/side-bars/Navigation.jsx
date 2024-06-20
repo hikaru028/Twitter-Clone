@@ -35,8 +35,8 @@ const Navigation = () => {
     ];
 
   return (
-    <div className='flex flex-col justify-between w-18 max-w-[300px]'>
-        <div className='sticky top-0 left-0 h-screen flex flex-col justify-between items-center border-r border-gray-700 w-[100px] md:w-full'>
+    <div className='flemd:flex-[2_2_0] w-18 max-w-52'>
+        <div className='sticky top-0 left-0 h-screen flex flex-col justify-between items-center border-r border-gray-700 w-[100px] md:w-full pr-36'>
             <ul className='flex flex-col gap-3 mt-1 mb-2'>
                 {/* Logo */}
                 <Link to='/' className='flex justify-center items-center max-w-fit hover:bg-stone-900 transition-all rounded-full duration-200 cursor-pointer'>
@@ -60,7 +60,7 @@ const Navigation = () => {
                 </li>  
             </ul>
             {/* User panel */}
-            <UserPanel />
+            <UserPanel authUser={authUser} />
         </div>
     </div>
   )

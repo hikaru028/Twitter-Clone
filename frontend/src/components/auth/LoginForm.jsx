@@ -11,19 +11,12 @@ const LoginForm = () => {
 
   const queryClient = useQueryClient();
   
-  const {
-    mutate: loginMutation, 
-    isError, 
-    isLoading, 
-    // error, 
-  } = useMutation({
+  const { mutate: login, isError, isLoading, error } = useMutation({
     mutationFn: async ({ username, password }) => {
         try {
             const res = await fetch('/api/auth/login', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ username, password }),
             });
 
@@ -35,13 +28,13 @@ const LoginForm = () => {
         }
     },
     onSuccess: () => { 
-      queryClient.invalidateQueries({ queryKey: ['authUser'] });
+      queryClient.invalidateQueries({ queryKey: ['authUser'] }); // refetch the authUser
     },
   });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    loginMutation(formData);
+    login(formData);
   };
 
   const handleInputChange = (event) => {
@@ -76,10 +69,10 @@ const LoginForm = () => {
         </label>
 
       {/* Submit button */}
-      <button type="submit" to="/login" className=' w-full btn rounded-full btn-primary text-white'>
+      <button className=' w-full btn rounded-full btn-primary text-white'>
         {isLoading ? 'Loading...' : 'Login'}
       </button>
-      {isError && <p className='text-red-500'>Something went wrong</p>}
+      {isError && <p className='text-red-500'>{error.message}</p>}
     </form>
   );
 };
