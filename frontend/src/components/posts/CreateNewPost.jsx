@@ -9,78 +9,74 @@ import { BsEmojiSmile } from "react-icons/bs"
 import { LuCalendarClock } from "react-icons/lu"
 import { GrLocation } from "react-icons/gr"
 
-
 const CreateNewPost = () => {
     const [text, setText] = useState('');
-    const [image, setImage] = useState(null);
+    const [img, setImage] = useState(null);
     const imageRef = useRef(null);
     const textareaRef = useRef(null);
     const { data: authUser } = useQuery({ queryKey: ['authUser'] });
     const queryClient = useQueryClient();
 
-    const {mutate: createPost, isPending, isError, error} = useMutation({
-        mutationFc: async ({ text, image }) => {
+    const { mutate: createPost, isPending, isError, error } = useMutation({
+        mutationFn: async ({ text, img }) => {
+            const formData = new FormData();
+            formData.append('text', text);
+            formData.append('img', img);
             try {
                 const res = await fetch("/api/posts/create", {
                     method: "POST",
-                    header: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ text, image }),
+                    body: formData,
                 });
-
+                
                 const data = await res.json();
-                if (!res.ok) {
-                    throw new Error(data.error || 'Something went wrong');
-                }
-
+                if (!res.ok) throw new Error(data.error || 'Something went wrong');
                 return data;
             } catch (error) {
-                throw new Error(error);
+                throw new Error(error.message);
             }
         },
         onSuccess: () => {
             setText('');
             setImage(null);
-            queryClient.invalidateQueries({ queryKey: ['posts']});
+            queryClient.invalidateQueries({ queryKey: ['posts'] });
         },
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        createPost({ text, image });
+        if (!text && !img) {
+            alert('Post must have text or image');
+            return;
+        }
+        createPost({ text, img });
     };
 
     const handleFocus = (e) => {
-      e.preventDefault();
-      const options = document.getElementById('options');
-      if (options) {
-        options.style.borderTop = '1px solid #1F2937';
-      }
+        e.preventDefault();
+        const options = document.getElementById('options');
+        if (options) {
+            options.style.borderTop = '1px solid #1F2937';
+        }
     };
+
     const handleBlur = () => {
-      const options = document.getElementById('options');
-      if (options) {
-        options.style.borderTop = '';  // Remove the style
-      }
+        const options = document.getElementById('options');
+        if (options) {
+            options.style.borderTop = '';  // Remove the style
+        }
     };
 
     useEffect(() => {
-      if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto';
-        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-      }
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+        }
     }, [text]);
 
     const handleImgChange = (e) => {
         const file = e.target.files[0];
-
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setImage(reader.result);
-            };
-            reader.readAsDataURL(file);
+            setImage(file);
         }
     };
 
@@ -88,11 +84,9 @@ const CreateNewPost = () => {
         <div className='flex pt-4 px-6 items-start gap-4 border-b border-gray-800'>
             {/* Avatar */}
             <div className='avatar'>
-                  <div className='w-12 rounded-full'>
-                      <img src={
-                        // authUser.profileImg || 
-                        '../../../public/avatars/boy1.png'} />
-                  </div>
+                <div className='w-12 rounded-full'>
+                    <img src={authUser.profileImg || '../../../../public/avatars/user-default.png'} />
+                </div>
             </div>
 
             {/* Form */}
@@ -108,13 +102,15 @@ const CreateNewPost = () => {
                     className='textarea w-full focus:min-h-[112px] p-0 mt-1 text-2xl font-medium resize-none border-none focus:outline-none'
                 />
                 {/* Image */}
-                {image && (
-                    <div className='relative w-72 mx-auto'>
-                        <IoCloseSharp
-                            onClick={() => {setImage(null); imageRef.current.value = null;}}
-                            className='absolute top-0 right-0 text-white bg-gray-800 rounded-full w-5 h-5 cursor-pointer' 
-                        />
-                        <img src={image} className='w-full max-auto h-72 object-contain rounded' />
+                {img && (
+                    <div className='w-full flex justify-center items-center'>
+                        <div className='relative w-full h-auto m-x-auto'>
+                            <IoCloseSharp
+                                onClick={() => { setImage(null); imageRef.current.value = null; }}
+                                className='absolute top-1 right-1 text-white bg-gray-800 rounded-full w-10 h-10 p-2 cursor-pointer'
+                            />
+                            <img src={URL.createObjectURL(img)} className='w-full max-auto object-contain rounded-[15px]' />
+                        </div>
                     </div>
                 )}
 
@@ -141,7 +137,7 @@ const CreateNewPost = () => {
                 {isError && <div className='text-red-500'>{error.message}</div>}
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default CreateNewPost
+export default CreateNewPost;

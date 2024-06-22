@@ -32,5 +32,5 @@ body {
 }
 
 .nav-text {
-  @apply text-2xl font-medium hidden md:block ml-4;
+  @apply text-2xl hidden md:block ml-4;
 }

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import RightPanelSkeleton from '../skeletons/RightPanelSkeleton'
 // import LoadingSpinner from '../loading/LoadingSpinner'
 // import useFollow from '../../hooks/useFollow'
-import avatarImg from '../../../public/avatars/boy1.png'
+import avatarImg from '../../../public/avatars/user-default.png'
 
 const RecommendedUsers = () => {
     return (

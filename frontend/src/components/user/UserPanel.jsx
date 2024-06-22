@@ -58,7 +58,7 @@ const UserPanel = () => {
                     >
                         <div className='avatar md:inline-flex'>
                             <div className='w-12 rounded-full'>
-                                <img src={authUser?.profileImg || '../../../public/avatars/boy1.png'} />
+                                <img src={authUser?.profileImg || '../../../public/avatars/user-default.png'} />
                             </div>
                         </div>
                             <div className='hidden md:block mr-2'>

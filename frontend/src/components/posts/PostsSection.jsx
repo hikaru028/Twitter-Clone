@@ -3,14 +3,10 @@ import { useQuery } from '@tanstack/react-query'
 import PostGenerator from './post/PostGenerator'
 import PostSkeleton from '../skeletons/PostSkeleton'
 
-
-const PostsSection = ({ feedType }) => {
-    const username = 'hikaru';
-    const userId = '1234asdf';
-    
+const PostsSection = ({ feedType, username, userId }) => {
     const getPostEndpoint = () => {
         switch (feedType) {
-            case 'for You':
+            case 'forYou':
                 return '/api/posts/all';
             case 'following':
                 return '/api/posts/following';

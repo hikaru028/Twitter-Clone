@@ -5,7 +5,7 @@ export const POSTS = [
 		img: "/posts/post1.png",
 		user: {
 			username: "johndoe",
-			profileImg: "/avatars/boy1.png",
+			profileImg: "/avatars/user-default.png",
 			fullName: "John Doe",
 		},
 		comments: [

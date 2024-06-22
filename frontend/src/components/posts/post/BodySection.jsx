@@ -1,4 +1,4 @@
-const HeaderSection = ({ post }) => {
+const BodySection = ({ post }) => {
   return (
     <div className='flex flex-col gap-3 overflow-hidden'>
         <span className='text-xl'> text {post.text}</span>
@@ -13,4 +13,4 @@ const HeaderSection = ({ post }) => {
   )
 }
 
-export default HeaderSection
+export default BodySection

@@ -5,6 +5,7 @@ import HomePage from './pages/(home)/HomePage'
 import SignUpPage from './pages/(auth)/signup/SignUpPage'
 import LoginPage from './pages/(auth)/login/LoginPage'
 import NotificationPage from './pages/(notification)/NotificationPage'
+import ProfilePage from './pages/(profile)/ProfilePage'
 import Navigation from './components/side-bars/Navigation'
 import RightPanel from './components/side-bars/RightPanel'
 import LoadingSpinner from './components/loading/LoadingSpinner'
@@ -45,7 +46,7 @@ function App() {
         <Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
         <Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to='/' />} />
         <Route path='/notification' element={authUser ? <NotificationPage /> : <Navigate to='/login' />} />
-        {/* <Route path='/profile/:username' element={authUser ? <profilePage /> : <Navigate to='/login' />} /> */}
+        <Route path='/profile/:username' element={authUser ? <ProfilePage /> : <Navigate to='/login' />} />
       </Routes>
       {authUser && <RightPanel /> }
     </div>
