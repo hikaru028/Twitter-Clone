@@ -34,3 +34,11 @@ body {
 .nav-text {
   @apply text-2xl hidden md:block ml-4;
 }
+
+.post-popup-list {
+  @apply flex justify-start items-center gap-x-4 text-xl font-extrabold hover:bg-stone-900 transition-all duration-200 py-3 px-4 cursor-pointer
+}
+
+.post-popup-icon {
+  @apply w-6 h-6
+}

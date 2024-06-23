@@ -22,7 +22,7 @@ const PostsSection = ({ feedType, username, userId }) => {
 
     const { data: posts, isLoading, refetch, isRefetching } = useQuery({
         queryKey: ['posts'],
-        queryFc: async () => {
+        queryFn: async () => {
             try {
                 const res = await fetch(POST_ENDPOINT);
                 const data = await res.json();
@@ -30,6 +30,7 @@ const PostsSection = ({ feedType, username, userId }) => {
                 if (!res.ok) {
                     throw new Error(data.error || 'Oops! Something went wrong');
                 }
+                return data;
             } catch (error) {
                 throw new Error(error);
             }

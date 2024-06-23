@@ -1,7 +1,6 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query' 
 import toast from 'react-hot-toast'
-import LoadingSpinner from '../../loading/LoadingSpinner'
-import { FaRegHeart } from 'react-icons/fa'
+import { IoHeartOutline, IoHeartSharp } from 'react-icons/io5'
 
 const LikeUnlikePost = ({ post }) => {
     const { data: authUser } = useQuery({ queryKey: ['authUser'] });
@@ -50,13 +49,13 @@ const LikeUnlikePost = ({ post }) => {
 
     return (
         <div onClick={handleLikePost} className='flex w-1/3 justify-start group items-center'>
-            {isLiking && <LoadingSpinner size='sm' />}
+            {isLiking}
             <div className='w-12 h-12 -m-1 group-hover:bg-pink-500/15 flex justify-center items-center rounded-full'>
                 {!isLiked && !isLiking && (
-                    <FaRegHeart className='w-5 h-5 cursor-pointer text-slate-500 group-hover:text-pink-500' />
+                    <IoHeartOutline className='w-5 h-5 cursor-pointer text-slate-500 group-hover:text-pink-500' />
                 )}
                 {isLiked && !isLiking && (
-                    <FaRegHeart className='w-5 h-5 cursor-pointer text-pink-500' />
+                    <IoHeartSharp className='w-5 h-5 cursor-pointer text-pink-500' />
                 )}
             </div>
             <span className={`text-lg group-hover:text-pink-500 ${isLiked ? 'text-pink-500' : 'text-slate-500'}`}>

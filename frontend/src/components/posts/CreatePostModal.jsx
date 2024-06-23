@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 import { RiCloseLine } from 'react-icons/ri'
 import userDefaultImg from '../../../../public/avatars/user-default.png'
 
-const CommentPostModal = ({ post }) => {
+const CreatePostModal = ({ post }) => {
     const queryClient = useQueryClient();
     const [comment, setComment] = useState('');
 
@@ -48,7 +48,7 @@ const CommentPostModal = ({ post }) => {
 
     return (
         <>
-            <dialog id='comments_modal' className='modal border-none outline-none'>
+            <dialog id='something' className='modal border-none outline-none'>
                 <div className='modal-box rounded border border-gray-600'>
                     <h3 className='font-bold text-lg mb-4'>COMMENTS</h3>
                     <div className='flex flex-col gap-3 max-h-60 overflow-auto'>
@@ -101,4 +101,4 @@ const CommentPostModal = ({ post }) => {
     )
 }
 
-export default CommentPostModal
+export default CreatePostModal

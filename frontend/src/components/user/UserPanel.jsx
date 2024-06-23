@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
@@ -7,6 +8,7 @@ import { RiMoreFill } from "react-icons/ri";
 const UserPanel = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
+    const popupRef = useRef(null);
     
     const { mutate: logout } = useMutation({
         mutationFc: async () => {
@@ -46,6 +48,19 @@ const UserPanel = () => {
         navigate('/login');
     };
 
+    const handleClickOutside = (e) => {
+        if (popupRef.current && !popupRef.current.contains(e.target)) {
+            popupRef.current.style.display = 'none';
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
   return (
       <>
         {authUser && (
@@ -70,7 +85,7 @@ const UserPanel = () => {
                 </div>
         
                 {/* Popup */}
-                <div id='popup' className='hidden absolute bottom-[90px] -left-11 z-20'>
+                <div id='popup' ref={popupRef} className='hidden absolute z-20'>
                     <div className='relative w-[320px] h-[120px] bg-black flex flex-col justify-center rounded-[18px] z-10'>
                         <ul className=''>
                             <li 

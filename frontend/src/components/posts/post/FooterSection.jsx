@@ -52,13 +52,13 @@ const FooterSection = ({ post }) => {
                 </div>
 
                 {/* Bookmark & Share*/}
-                <div className='flex w-1/5 justify-end items-center'>
-                    <div className='flex w-1/3 justify-end items-center group'>
+                <div className='flex w-auto justify-end items-center'>
+                    <div className='flex  justify-end items-center group'>
                         <div className='w-12 h-12 group-hover:bg-sky-400/15 flex justify-center items-center rounded-full'>
                             <FaRegBookmark className='w-5 h-5 text-slate-500 group-hover:text-sky-400 cursor-pointer' />
                         </div>
                     </div>
-                    <div className='flex w-1/3 justify-end items-center group'>
+                    <div className='flex justify-end items-center group'>
                         <div className='w-12 h-12 group-hover:bg-sky-400/15 flex justify-center items-center rounded-full'>
                             <RiShare2Fill className='w-6 h-6 text-slate-500 hover:text-sky-400 cursor-pointer' />
                         </div>

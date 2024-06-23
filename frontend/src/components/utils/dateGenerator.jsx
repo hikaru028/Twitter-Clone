@@ -8,7 +8,7 @@ export const getDatePosted = (createdAt) => {
     const timeDifferenceInDays = Math.floor(timeDifferenceInHours / 24);
 
     if (timeDifferenceInDays > 1) {
-        return createdAtDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        return createdAtDate.toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
     } else if (timeDifferenceInDays === 1) {
         return '1d';
     } else if (timeDifferenceInHours >= 1) {
