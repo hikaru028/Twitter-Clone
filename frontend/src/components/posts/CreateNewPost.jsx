@@ -19,15 +19,13 @@ const CreateNewPost = () => {
 
     const { mutate: createPost, isPending, isError, error } = useMutation({
         mutationFn: async ({ text, img }) => {
-            const formData = new FormData();
-            formData.append('text', text);
-            formData.append('img', img);
             try {
                 const res = await fetch("/api/posts/create", {
                     method: "POST",
-                    body: formData,
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ text, img }),
                 });
-                
+
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.error || 'Something went wrong');
                 return data;
@@ -44,10 +42,6 @@ const CreateNewPost = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!text && !img) {
-            alert('Post must have text or image');
-            return;
-        }
         createPost({ text, img });
     };
 
@@ -76,7 +70,11 @@ const CreateNewPost = () => {
     const handleImgChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setImage(file);
+            const reader = new FileReader();
+            reader.onload = () => {
+                setImage(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -109,7 +107,7 @@ const CreateNewPost = () => {
                                 onClick={() => { setImage(null); imageRef.current.value = null; }}
                                 className='absolute top-1 right-1 text-white bg-gray-800 rounded-full w-10 h-10 p-2 cursor-pointer'
                             />
-                            <img src={URL.createObjectURL(img)} className='w-full max-auto object-contain rounded-[15px]' />
+                            <img src={img} className='w-full max-auto object-contain rounded-[15px]' />
                         </div>
                     </div>
                 )}

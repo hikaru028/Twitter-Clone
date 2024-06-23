@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import { v2 as cloudinary } from 'cloudinary';
 // Routes
 import authRoute from './routes/auth.js';
@@ -25,6 +26,9 @@ cloudinary.config({
 const app = express();
 const port = process.env.PORT || 8000;
 
+// Increase the payload size limit
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
