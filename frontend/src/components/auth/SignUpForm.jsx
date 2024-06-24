@@ -25,7 +25,7 @@ const SignUpForm = () => {
         
         const data = await res.json();
         if (!res.ok || data.error) throw new Error(data.error || 'Failed to create an account');
-        console.log(data);
+
         return data;
       } catch (error) {
         console.error(error);

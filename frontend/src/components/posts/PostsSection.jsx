@@ -12,6 +12,14 @@ const PostsSection = ({ feedType, username, userId }) => {
                 return '/api/posts/following';
             case 'posts':
                 return `/api/posts/user/${username}`;
+            case 'replies':
+                return `/api/posts/user/${username}`;
+            case 'highlights':
+                return `/api/posts/user/${username}`;
+            case 'articles':
+                return `/api/posts/user/${username}`;
+            case 'media':
+                return `/api/posts/user/${username}`;
             case 'likes':
                 return `api/posts/likes/${userId}`;
             default:

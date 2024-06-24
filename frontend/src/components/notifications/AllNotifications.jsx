@@ -31,7 +31,7 @@ const AllNotifications = () => {
             )}
 
             {/* Notifications */}
-            <div className='flex justify-between items-center py-2 px-4 border-b border-gray-700 hover:bg-secondary/50 cursor-pointer'>
+            <div className='flex flex-col justify-between items-center py-2 px-4 border-b border-gray-700 hover:bg-secondary/50 cursor-pointer'>
                 {notifications?.length === 0 && 
                 <div className='text-center p-4 font-bold'>No notifications</div>}
                     {notifications?.map((notification) => (

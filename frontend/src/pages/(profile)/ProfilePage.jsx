@@ -18,7 +18,6 @@ const ProfilePage = () => {
         'likes',
     ];
 
-    
     const { data: user, isLoading, refetch, isRefetching } = useQuery({
         queryKey: ['userProfile'],
         queryFn: async () => {
@@ -38,6 +37,7 @@ const ProfilePage = () => {
     useEffect(() => {
         refetch();
     }, [username, refetch]);
+
     return (
         <div className='flex-[4_4_0] mr-auto border-r border-gray-700 lg:min-w-[600px] min-h-screen'>
             {(isLoading || isRefetching) && <ProfileHeaderSkeleton />}

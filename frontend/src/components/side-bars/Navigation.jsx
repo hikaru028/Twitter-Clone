@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import UserPanel from '../user/UserPanel'
+import CreatePostModal from '../posts/CreatePostModal'
 // Icons
 import { GoHome, GoHomeFill } from "react-icons/go"
 import { TbMail, TbMailFilled } from "react-icons/tb"
 import { PiMagnifyingGlass, PiMagnifyingGlassBold } from "react-icons/pi"
 import { IoNotificationsOutline, IoNotifications, IoBookmarkOutline, IoBookmark } from "react-icons/io5";
 import { BsSlashSquare, BsSlashSquareFill } from "react-icons/bs";
-import { RiFileListLine, RiFileListFill, RiQuillPenFill } from "react-icons/ri";
+import { RiFileListLine, RiFileListFill } from "react-icons/ri";
 import { CiCircleMore } from "react-icons/ci";
 import { CgMoreO } from "react-icons/cg";
 import { BsPerson, BsPersonFill, BsPeople, BsPeopleFill } from "react-icons/bs";
@@ -56,10 +57,7 @@ const Navigation = () => {
                 ))}
     
                 {/* Post button */}
-                <li className='flex justify-center items-center mt-5 w-[55px] md:w-[230px] h-[55px] btn rounded-full btn-primary text-white'>
-                    <p className='hidden md:block md:text-2xl md:font-bold'>Post</p>
-                    <RiQuillPenFill className='w-9 h-9 md:hidden' />
-                </li>  
+                <CreatePostModal />
             </ul>
             {/* User panel */}
             <UserPanel />

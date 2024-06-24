@@ -1,101 +1,145 @@
-import { useState } from 'react'
-import { useQueryClient, useMutation } from '@tanstack/react-query' 
-import LoadingSpinner from '../../loading/LoadingSpinner'
-import toast from 'react-hot-toast'
+import { useRef, useState, useEffect } from "react"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 // Icons
-import { RiCloseLine } from 'react-icons/ri'
-import userDefaultImg from '../../../../public/avatars/user-default.png'
+import { IoCloseSharp } from "react-icons/io5"
+import { GrImage } from "react-icons/gr"
+import { MdOutlineGifBox } from "react-icons/md"
+import { RiListRadio, RiCloseLine, RiQuillPenFill } from "react-icons/ri"
+import { BsEmojiSmile } from "react-icons/bs"
+import { LuCalendarClock } from "react-icons/lu"
+import { GrLocation } from "react-icons/gr"
 
-const CreatePostModal = ({ post }) => {
+const CreatePostModal = () => {
+    const { data: authUser } = useQuery({ queryKey: ['authUser'] });
+    const [text, setText] = useState('');
+    const [img, setImage] = useState(null);
+    const imageRef = useRef(null);
+    const textareaRef = useRef(null);
     const queryClient = useQueryClient();
-    const [comment, setComment] = useState('');
 
-    const { mutate: commentPost, isPending: isCommenting } = useMutation({
-		mutationFn: async () => {
-			try {
-				const res = await fetch(`/api/posts/comment/${post._id}`, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ text: comment }),
-				});
-				const data = await res.json();
+    const { mutate: createPost, isPending, isError, error } = useMutation({
+        mutationFn: async ({ text, img }) => {
+            try {
+                const res = await fetch("/api/posts/create", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ text, img }),
+                });
 
-				if (!res.ok) {
-					throw new Error(data.error || "Something went wrong");
-				}
-				return data;
-			} catch (error) {
-				throw new Error(error);
-			}
-		},
-		onSuccess: () => {
-			toast.success("Comment posted successfully");
-			setComment("");
-			queryClient.invalidateQueries({ queryKey: ["posts"] });
-		},
-		onError: (error) => {
-			toast.error(error.message);
-		},
-	});
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Something went wrong');
+                return data;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
+        onSuccess: () => {
+            setText('');
+            setImage(null);
+            queryClient.invalidateQueries({ queryKey: ['posts'] });
+            document.getElementById('create_post_dialog').close();
+        },
+    });
 
-    const handlePostComment = (e) => {
-		e.preventDefault();
-		if (isCommenting) return;
-		commentPost();
-	};
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        createPost({ text, img });
+    };
+
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+        }
+    }, [text]);
+
+    const handleImgChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     return (
         <>
-            <dialog id='something' className='modal border-none outline-none'>
-                <div className='modal-box rounded border border-gray-600'>
-                    <h3 className='font-bold text-lg mb-4'>COMMENTS</h3>
-                    <div className='flex flex-col gap-3 max-h-60 overflow-auto'>
-                        {post.comments.length === 0 && (
-                            <p className='text-sm text-slate-500'>No comment yet</p>
-                        )}
-                        {post.comments.map((comment) => (
-                            <div key={comment._id} className='flex-gap-2 items-start'>
-                                {/* Avatar */}
-                                <div className='avatar'>
-                                    <div className='w-8 rounded-full'>
-                                        <img src={comment.user.profileImg || userDefaultImg } />
-                                    </div>
-                                </div>
-                                {/* User info */}
-                                <div className='flex flex-col'>
-                                    <div className='flex items-center gap-1'>
-                                        <span className='font-bold'>{comment.user.fullName}</span>
-                                        <span className='text-gray-700 text-sm'>@{comment.user.username}</span>
-                                    </div>
-                                    <div className='text-lg'>{comment.text}</div>
-                                </div>                                
-                            </div>
-                        ))}
+            <button 
+                onClick={() => document.getElementById('create_post_dialog').showModal()}
+                className='flex justify-center items-center mt-5 w-[55px] md:w-[230px] h-[55px] btn rounded-full btn-primary text-white'
+            >
+                <p className='hidden md:block md:text-2xl md:font-bold'>Post</p>
+                <RiQuillPenFill className='w-9 h-9 md:hidden' />
+            </button> 
+            <dialog id='create_post_dialog' className='border-none outline-none w-[600px] min-h-10 flex-col items-start bg-black mx-auto my-20 rounded-[20px]'>
+                <div className='w-full flex flex-col pt-4 px-6 items-start gap-4'>
+                    {/* Header */}
+                    <div className='flex px-3 justify-between items-center w-full'>
+                        <div className='modal-backdrop z-30'>
+                            <button onClick={() => document.getElementById("create_post_dialog").close()}>
+                                <RiCloseLine className='text-3xl text-white cursor-pointer'/>
+                            </button>
+                        </div>
+                        <h3 className='font-bold text-xl text-primary mr-4'>Draft</h3>
                     </div>
-                    <form
-                        onSubmit={handlePostComment}
-                        className='flex gap-2 items-center mt-4 border-t border-gray-600 pt-2' 
-                    >
-                        <textarea
-                            onChange={(e) => setComment(e.target.value)}
-                            value={comment}
-                            placeholder='Add a comment...' 
-                            className='textarea w-full p-1 rounded text-md resize-none border focus:outline-none border-gray-800' 
-                        />
-                        <button className='btn btn-primary rounded-full btn-sm text-white px-4'>
-                            {isCommenting ? <LoadingSpinner size='md' /> : 'Post'}
-                        </button>
+                    {/* Form */}
+                    <form onSubmit={handleSubmit} className='flex flex-col gap-1 w-full p-3 text-lg resize-none border-none focus:outline-none'>
+                        <div className='flex w-full'>
+                            {/* Avatar */}
+                            <div className='avatar'>
+                                <div className='w-11 h-11 rounded-full'>
+                                    <img src={authUser.profileImg || '../../../../public/avatars/user-default.png'} />
+                                </div>
+                            </div>
+                            <div className='flex-col w-full'>
+                                {/* Text */}
+                                <textarea
+                                    value={text}
+                                    onChange={(e) => setText(e.target.value)}
+                                    ref={textareaRef}
+                                    placeholder='What is happening?!'
+                                    className='textarea w-full min-h-[200px] p-3 text-2xl font-medium resize-none border-none focus:outline-none'
+                                />
+                                {/* Image */}
+                                {img && (
+                                    <div className='w-full flex justify-center items-center'>
+                                        <div className='relative w-full h-auto m-x-auto'>
+                                            <IoCloseSharp
+                                                onClick={() => { setImage(null); imageRef.current.value = null; }}
+                                                className='absolute top-1 right-1 text-white bg-gray-800 rounded-full w-10 h-10 p-2 cursor-pointer'
+                                            />
+                                            <img src={img} className='w-full max-auto object-contain rounded-[15px]' />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Options */}
+                        <div id='options' className='flex justify-between items-center py-2 border-t border-[#1F2937]'>
+                            <div className='flex gap-x-5 items-center'>
+                                <GrImage
+                                    className='text-primary w-6 h-7 cursor-pointer'
+                                    onClick={() => imageRef.current.click()}
+                                />
+                                <MdOutlineGifBox className='text-primary w-7 h-7 cursor-pointer' />
+                                <RiListRadio className='text-primary w-6 h-7 cursor-pointer' />
+                                <BsEmojiSmile className='text-primary stroke-[0.5px] w-5 h-5 cursor-pointer' />
+                                <LuCalendarClock className='text-primary w-6 h-6 cursor-pointer' />
+                                <GrLocation className='text-primary/50 w-6 h-6 cursor-pointer' />
+                            </div>
+                            <input type='file' accept='image/*' hidden ref={imageRef} onChange={handleImgChange} />
+                            <button className='btn btn-primary rounded-full text-white text-lg font-black my-1 px-6'>
+                                {isPending ? "Posting..." : "Post"}
+                            </button>
+                        </div>
+
+                        {/* Error notification */}
+                        {isError && <div className='text-red-500'>{error.message}</div>}
                     </form>
                 </div>
-
-                {/* Close button */}
-                <form method='dialog' className='modal-backdrop'>
-                    <button className='outline-none'>
-                        <RiCloseLine />
-                    </button>
-                </form>
             </dialog>
         </>
     )
