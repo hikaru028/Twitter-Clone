@@ -7,7 +7,7 @@ import avatarImg from '../../../public/avatars/user-default.png'
 
 const RecommendedUsers = () => {
     return (
-        <div className='border border-gray-700 rounded-[15px] mt-6'>
+        <div className='border border-gray-700 rounded-[15px] mt-6 overflow-hidden'>
             <p className='text-2xl font-black p-4 pl-7'>Who to follow</p>
             <div>
                 {/* Skeletons */}

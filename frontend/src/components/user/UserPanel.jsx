@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 // Icon
 import { RiMoreFill } from "react-icons/ri";
@@ -8,8 +8,10 @@ import { RiMoreFill } from "react-icons/ri";
 const UserPanel = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
+    const userSectionRef = useRef(null);
     const popupRef = useRef(null);
-    
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+
     const { mutate: logout } = useMutation({
         mutationFc: async () => {
             try {
@@ -35,13 +37,7 @@ const UserPanel = () => {
 
     const togglePopup = (e) => {
         e.preventDefault();
-        const popup = document.getElementById('popup');
-        
-        if (popup.style.display === 'none' || popup.style.display === '') {
-          popup.style.display = 'block';
-        } else {
-          popup.style.display = 'none';
-        }
+        setIsPopupVisible((prev) => !prev);
     };
 
     const renderLoginPage = () => {
@@ -49,8 +45,13 @@ const UserPanel = () => {
     };
 
     const handleClickOutside = (e) => {
-        if (popupRef.current && !popupRef.current.contains(e.target)) {
-            popupRef.current.style.display = 'none';
+        if (
+            popupRef.current &&
+            !popupRef.current.contains(e.target) &&
+            userSectionRef.current &&
+            !userSectionRef.current.contains(e.target)
+        ) {
+            setIsPopupVisible(false);
         }
     };
 
@@ -66,8 +67,8 @@ const UserPanel = () => {
         {authUser && (
             <div className='relative inline-block mt-12 mb-4 '>
                 {/* user section */}
-                <div className='w-auto h-auto flex justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 p-4  cursor-pointer z-0'>
-                    <Link
+                <div ref={userSectionRef} className='w-auto h-auto flex justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 p-4  cursor-pointer z-0'>
+                    <div
                         onClick={togglePopup}
                         className='flex flex-row justify-between items-center md:w-[230px] '
                     >
@@ -81,32 +82,34 @@ const UserPanel = () => {
                                 <p className='text-slate-500 text-xl'>@{authUser?.username}</p>
                             </div>
                             <RiMoreFill className='hidden md:block w-6 h-6 font-semibold cursor-pointer' />    
-                    </Link>
+                    </div>
                 </div>
         
                 {/* Popup */}
-                <div id='popup' ref={popupRef} className='hidden absolute z-20'>
-                    <div className='relative w-[320px] h-[120px] bg-black flex flex-col justify-center rounded-[18px] z-10'>
-                        <ul className=''>
-                            <li 
-                                onClick={renderLoginPage}
-                                className='text-xl font-extrabold hover:bg-stone-900 transition-all duration-200 py-3 px-4 cursor-pointer'
-                            >
-                                Add an existing account
-                            </li>
-                            <li
-                                onClick={(e) => {
-									e.preventDefault();
-									logout();
-								}}
-                                className='text-xl font-extrabold hover:bg-stone-900 transition-all duration-200 py-3 px-4 cursor-pointer'
-                            >
-                                Log out of @{authUser?.username}
-                            </li>
-                        </ul>
+                {isPopupVisible && (
+                    <div ref={popupRef} className='absolute bottom-24 right-0 z-20'>
+                        <div className='relative w-[320px] h-[120px] bg-black flex flex-col justify-center rounded-[18px] z-10 overflow-hidden'>
+                            <ul className=''>
+                                <li 
+                                    onClick={renderLoginPage}
+                                    className='text-xl font-extrabold hover:bg-stone-900 transition-all duration-200 py-3 px-4 cursor-pointer'
+                                >
+                                    Add an existing account
+                                </li>
+                                <li
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        logout();
+                                    }}
+                                    className='text-xl font-extrabold hover:bg-stone-900 transition-all duration-200 py-3 px-4 cursor-pointer'
+                                >
+                                    Log out of @{authUser?.username}
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="absolute inset-[2px] rounded-[18px] blur-sm bg-gradient-to-br from-white via-white to-white z-0"></div>
                     </div>
-                    <div className="absolute inset-[2px] rounded-[18px] blur-sm bg-gradient-to-br from-white via-white to-white z-0"></div>
-                </div>
+                )}
             </div>
         )}
     </>

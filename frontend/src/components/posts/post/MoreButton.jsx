@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query' 
-import toast from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 //icons
 import { RiMoreFill, RiCodeSSlashFill, RiFlag2Line } from 'react-icons/ri'
 import { FaTrash } from 'react-icons/fa'
@@ -9,14 +9,24 @@ import { MdOutlinePostAdd, MdBlock } from 'react-icons/md'
 import { BiVolumeMute } from 'react-icons/bi'
 import { IoIosStats } from "react-icons/io"
 
+
 const MoreButton = ({ post }) => {
     const { data: authUser } = useQuery({ queryKey: ['authUser'] });
     const queryClient = useQueryClient();
-    const isMyPost = authUser._id === post.user.id;
+    const isMyPost = authUser._id === post.user._id;
     const [isPopupVisible, setIsPopupVisible] = useState(false);
-    const popupRef = useRef(null);
-
-    const { mutate: deletePost, isPending: isDeleting } = useMutation({
+    const postPopupRef = useRef(null);
+    const moreOptions = [
+        { icon: FaUserXmark, title: `Unfollow @${post.user.username}`},
+        { icon: MdOutlinePostAdd, title: `Add/remove @${post.user.username} from Lists`},
+        { icon: BiVolumeMute, title: `Mute @${post.user.username}`},
+        { icon: MdBlock, title: `Block @${post.user.username}`},
+        { icon: IoIosStats, title: 'View post engagements'},
+        { icon: RiCodeSSlashFill, title: 'Embed post'},
+        { icon: RiFlag2Line, title: 'Report post'},
+    ];
+    
+    const { mutate: deletePost } = useMutation({
         mutationFn: async () => {
             try {
                 const res = await fetch(`/api/posts/${post._id}`, {
@@ -40,13 +50,13 @@ const MoreButton = ({ post }) => {
 		deletePost();
 	};
 
-    const togglePopup = (e) => {
+    const togglePostPopup = (e) => {
         e.preventDefault();
         setIsPopupVisible(!isPopupVisible);
     };
 
     const handleClickOutside = (event) => {
-        if (popupRef.current && !popupRef.current.contains(event.target)) {
+        if (postPopupRef.current && !postPopupRef.current.contains(event.target)) {
             setIsPopupVisible(false);
         }
     };
@@ -62,52 +72,31 @@ const MoreButton = ({ post }) => {
         <>
             <div className='relative flex w-1/3 justify-end items-center group cursor-pointer'>
                 <div 
-                    onClick={togglePopup}
+                    onClick={togglePostPopup}
                     className='w-12 h-12 -m-1 group-hover:bg-sky-400/15 flex justify-center items-center rounded-full'
                 >
                     <RiMoreFill className='w-6 h-6 text-slate-500 group-hover:text-sky-400' />
                 </div>
                 {/* Popup */}
                 {isPopupVisible && (
-                    <div id='post-popup' ref={popupRef} className='absolute top-0 -right-1 z-20'>
-                        <div className='relative min-w-[350px] h-auto bg-black flex flex-col justify-center rounded-[15px] z-10'>
-                            <ul className=''>
-                                {isMyPost && !isDeleting && (
-                                    <li
-                                    onClick={handleDeletePost}
-                                    className='post-popup-list'
-                                    >
+                    <div id='post-popup' ref={postPopupRef} className='absolute top-0 -right-1 z-20'>
+                        <div className='relative min-w-[350px] h-auto bg-black flex flex-col justify-center rounded-[15px] z-10 overflow-hidden'>
+                            <ul>
+                                {isMyPost && (
+                                    <li onClick={handleDeletePost} className='post-popup-list'>
                                         <FaTrash className='post-popup-icon' />
+                                        Delete post
                                     </li>
                                 )}
-                                <li className='post-popup-list'>
-                                    <FaUserXmark className='post-popup-icon' />
-                                    Unfollow @username
-                                </li>
-                                <li className='post-popup-list'>
-                                    <MdOutlinePostAdd className='post-popup-icon' />
-                                    Add/remove @username from Lists
-                                </li>
-                                <li className='post-popup-list'>
-                                    <BiVolumeMute className='post-popup-icon' />
-                                    Mute @username
-                                </li>
-                                <li className='post-popup-list'>
-                                    <MdBlock className='post-popup-icon' />
-                                    Block @username
-                                </li>
-                                <li className='post-popup-list'>
-                                    <IoIosStats className='post-popup-icon' />
-                                    View post engagements
-                                </li>
-                                <li className='post-popup-list'>
-                                    <RiCodeSSlashFill className='post-popup-icon' />
-                                    Embed post
-                                </li>
-                                <li className='post-popup-list'>
-                                    <RiFlag2Line className='post-popup-icon' />
-                                    Report post
-                                </li>
+                                
+                                {!isMyPost && (
+                                    moreOptions.map((option, index) => (
+                                        <li key={index} className='post-popup-list'>
+                                            <option.icon className='post-popup-icon' />
+                                            {option.title}
+                                        </li>
+                                    ))
+                                )} 
                             </ul>
                         </div>
                         <div className="absolute inset-[2px] rounded-[14px] blur-sm bg-gradient-to-br from-white via-white to-white z-0"></div>
