@@ -73,7 +73,7 @@ const CreatePostModal = () => {
                 <p className='hidden md:block md:text-2xl md:font-bold'>Post</p>
                 <RiQuillPenFill className='w-9 h-9 md:hidden' />
             </button> 
-            <dialog id='create_post_dialog' className='border-none outline-none w-[600px] min-h-10 flex-col items-start bg-black mx-auto my-20 rounded-[20px]'>
+            <dialog id='create_post_dialog' className='border-none outline-none w-[600px] min-h-10 flex-col items-start bg-gray-900 mx-auto my-20 rounded-[20px]'>
                 <div className='w-full flex flex-col pt-4 px-6 items-start gap-4'>
                     {/* Header */}
                     <div className='flex px-3 justify-between items-center w-full'>
@@ -100,7 +100,7 @@ const CreatePostModal = () => {
                                     onChange={(e) => setText(e.target.value)}
                                     ref={textareaRef}
                                     placeholder='What is happening?!'
-                                    className='textarea w-full min-h-[200px] p-3 text-2xl font-medium resize-none border-none focus:outline-none'
+                                    className='textarea w-full min-h-[200px] p-3 text-2xl font-medium resize-none border-none focus:outline-none bg-gray-900'
                                 />
                                 {/* Image */}
                                 {img && (

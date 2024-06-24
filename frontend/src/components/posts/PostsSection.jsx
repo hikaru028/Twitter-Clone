@@ -49,6 +49,8 @@ const PostsSection = ({ feedType, username, userId }) => {
 		refetch();
 	}, [feedType, refetch, username]);
 
+    const sortedPosts = posts ? [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : [];
+
     return (
         <> 
             {(isLoading || isRefetching) && (
@@ -63,7 +65,7 @@ const PostsSection = ({ feedType, username, userId }) => {
             )}
             {!isLoading && !isRefetching && posts && (
                 <div>
-                    {posts.map((post) => (
+                    {sortedPosts.map((post) => (
                         <PostGenerator key={post._id} post={post} />
                     ))}
                 </div>
