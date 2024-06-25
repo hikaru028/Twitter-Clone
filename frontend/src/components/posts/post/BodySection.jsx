@@ -1,7 +1,7 @@
 const BodySection = ({ post }) => {
   return (
     <div className='flex flex-col gap-3 overflow-hidden'>
-        <span className='text-xl'>{post.text}</span>
+        <span className='text-xl whitespace-pre-wrap'>{post.text}</span>
         {post.img && (
             <img 
                 src={post.img} 

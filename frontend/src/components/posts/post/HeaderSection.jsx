@@ -14,10 +14,9 @@ const HeaderSection = ({ post }) => {
                 <Link to={`/profile/${postOwner.username}`} className='text-xl font-bold hover:underline'>
                     {postOwner.fullName}
                 </Link>
-                <span className='text-gray-700 flex gap-1 text-xl'>
+                <span className='text-gray-700 flex gap-x-2 text-xl'>
                     <Link to={`/profile/${postOwner.username}`} >@{postOwner.username}</Link>
-                    <span>・</span>
-                    <span>{postedDate}</span>
+                    <span>・{postedDate}</span>
                 </span>
             </div>
 

@@ -23,11 +23,8 @@ const LikeUnlikePost = ({ post }) => {
 				throw new Error(error);
 			}
 		},
-		onSuccess: (updatedLikes) => {
-			// this is not the best UX, bc it will refetch all posts
-			// queryClient.invalidateQueries({ queryKey: ["posts"] });
-
-			// instead, update the cache directly for that post
+		onSuccess: (updatedLikes) => { // will be returned updatedLikes' data
+			// Update the cache directly for that post
 			queryClient.setQueryData(["posts"], (oldData) => {
 				return oldData.map((p) => {
 					if (p._id === post._id) {

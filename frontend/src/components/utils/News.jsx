@@ -25,13 +25,13 @@ const News = () => {
                     className='flex items-center justify-between py-3 pr-4 pl-7 cursor-pointer hover:bg-[#16181C] transition-all duration-200' 
                 >
                     <div className='flex gap-2 items-center'>
-                        {/* User image */}
+                        {/* news image */}
                         <div className='avatar'>
                             <div className='w-20 rounded-lg'>
-                                <img src={newsImage } />
+                                <img src={newsImage} />
                             </div>
                         </div>
-                        {/* User names */}
+                        {/* news title */}
                         <div className='flex flex-col w-18 lg:w-[200px]'>
                             <span className='w-full text-lg font-bold tracking-tight truncate hover:underline cursor-pointer'>
                                 News Title
