@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import RightPanelSkeleton from '../skeletons/RightPanelSkeleton'
-// import LoadingSpinner from '../loading/LoadingSpinner'
-// import useFollow from '../../hooks/useFollow'
+import useFollow from '../hooks/useFollow'
 import avatarImg from '../../../public/avatars/user-default.png'
 
 const RecommendedUsers = () => {
@@ -14,7 +13,7 @@ const RecommendedUsers = () => {
                 const data = await res.json();
 
                 if (!res.ok) {
-                    throw new Error(data.meddage || 'Something went wrong');
+                    throw new Error(data.error || 'Something went wrong');
                 }
 
                 return data;
@@ -23,6 +22,8 @@ const RecommendedUsers = () => {
             }
         }
     });
+
+    const { follow } =  useFollow();
 
     if (suggestedUsers?.length === 0) return <div className='md:w-0 w-64'></div>;
     return (
@@ -67,7 +68,7 @@ const RecommendedUsers = () => {
                         {/* Follow button */}
                         <div className='w-auto flex justify-center items-center bg-white py-1 px-2 rounded-full'>
                             <button
-                                onClick={(e) => {e.preventDefault(); }}
+                                onClick={(e) => { e.preventDefault(); follow(user._id); }}
                                 className='btn btn-sm text-lg border-none bg-white text-black hover:bg-white hover:opacity-90 rounded-full cursor-pointer'
                             >
                                 Follow
