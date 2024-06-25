@@ -30,8 +30,8 @@ const port = process.env.PORT || 8000;
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // Middleware to parse JSON and URL-encoded data
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' })); // To parse req.body but do not too large due to DoS attack
+app.use(express.urlencoded({ extended: true })); // To parse from data
 app.use(cookieParser());
 
 // Use routes imported
