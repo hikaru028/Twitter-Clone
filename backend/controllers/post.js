@@ -125,16 +125,30 @@ export const likeUnlikePost = async (req, res) => {
 export const commentOnPost = async (req, res) => {
     try {
         const { text } = req.body;
-        console.log('text: '  + text);
+        let { img } = req.body;
         const postId = req.params.id;
         const userId = req.user._id;
 
+        if (!text && !img) {
+            return res.status(400).json({ error: 'Post must have text or image' });
+        }
+
         if (!text) return res.status(404).json({ error: 'Text field is required' });
-        
+
+        let imageUrl = '';
+        if (img) {
+            const uploadedResponse = await cloudinary.uploader.upload(img);
+			imageUrl = uploadedResponse.secure_url;
+        }
+
         const post = await Post.findById(postId);
         if (!post) return res.status(404).json({ error: 'Post not found' });
-
-        const comment = { user: userId, text }
+        
+        const comment = new Post({
+            user: userId,
+            text,
+            img: imageUrl,
+        });
 
         post.comments.push(comment);
         await post.save();
@@ -165,6 +179,40 @@ export const deletePost = async (req, res) => {
         res.status(200).json({ message: 'Post deleted successfully' });
     } catch (error) {
         console.log('Error in deletePost controller', error.message);
+        res.status(500).json({ error: 'Server error'});
+    };
+};
+
+export const deleteComment = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        // Find the post containing the comment
+        const post = await Post.findOne({ "comments._id": req.params.id });
+        
+        if (!post) return res.status(404).json({ error: 'Comment not found' });
+
+        // Find the comment within the post
+        const comment = post.comments.id(req.params.id);
+        if (!comment) return res.status(404).json({ error: 'Comment not found' });
+
+        // Authorisation check
+        if (comment.user.toString() !== req.user._id.toString()) {
+            return res.status(401).json({ error: 'You are not authorised to delete this comment' });
+        }
+
+        // Delete the image if exists
+        if (comment.img) {
+            const imgId = comment.img.split('/').pop().split('.')[0];
+            await cloudinary.uploader.destroy(imgId);
+        }
+        
+        post.comments.pull(comment);
+        await post.save();
+
+        const updatedComments = post.comments.filter((id) => id.toString() !== userId.toString());
+        res.status(200).json(updatedComments);
+    } catch (error) {
+        console.log('Error in deleteComment controller', error.message);
         res.status(500).json({ error: 'Server error'});
     };
 };

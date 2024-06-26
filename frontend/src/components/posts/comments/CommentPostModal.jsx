@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import toast from 'react-hot-toast'
 import { getDatePosted } from '../../utils/dateGenerator'
+import MoreButton from '../../posts/comments/MoreButton'
 // Icons
 import { FaRegComment } from "react-icons/fa"
 import { GrImage } from "react-icons/gr"
@@ -11,6 +12,7 @@ import { RiListRadio, RiCloseLine } from "react-icons/ri"
 import { BsEmojiSmile } from "react-icons/bs"
 import { LuCalendarClock } from "react-icons/lu"
 import { GrLocation } from "react-icons/gr"
+import { IoCloseSharp } from "react-icons/io5"
 import userDefaultImg from '../../../../public/avatars/user-default.png'
 
 const CommentPostModal = ({ post }) => {
@@ -25,14 +27,14 @@ const CommentPostModal = ({ post }) => {
     const queryClient = useQueryClient();
     const postedDate = getDatePosted(post.createdAt);
 
+    const isMyComment = (commentUserId) => commentUserId === authUser._id;
+
     const { mutate: commentPost, isPending: isCommenting } = useMutation({
 		mutationFn: async ({ comment, img }) => {
 			try {
 				const res = await fetch(`/api/posts/comment/${post._id}`, {
 					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
+					headers: {"Content-Type": "application/json"},
 					body: JSON.stringify({ text: comment, img: img }),
 				});
 				const data = await res.json();
@@ -46,7 +48,6 @@ const CommentPostModal = ({ post }) => {
 			}
 		},
 		onSuccess: () => {
-			toast.success("Comment posted successfully");
 			setComment('');
             setBarHeight(0);
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -122,7 +123,7 @@ const CommentPostModal = ({ post }) => {
                             {/* Posted user image */}
                             <div className='avatar flex-col justify-center items-center'>
                                 <div className='w-11 h-11 rounded-full'>
-                                    <img src={postOwner.profileImg || '../../../../public/avatars/user-default.png'} />
+                                    <img src={postOwner.profileImg || userDefaultImg} />
                                 </div>
                                 {/* Left bar */}
                                 <div className='w-[1.5px] min-h-[50px] bg-white/40 my-2' style={{ height: barHeight }}></div>
@@ -145,14 +146,51 @@ const CommentPostModal = ({ post }) => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Others comments */}
+                    {post.comments.map((comment) => (
+                        <div key={comment._id} className='flex flex-col gap-3  px-5 mt-8 overflow-auto'>
+                            <div className='flex justify-start items-start'>
+                                {/* Commented user image */}
+                                <div className='avatar flex-col justify-center items-center'>
+                                    <div className='w-11 h-11 rounded-full'>
+                                        <img src={comment.user?.profileImg || userDefaultImg} />
+                                    </div>
+                                    {/* Left bar */}
+                                    <div className='w-[1.5px] min-h-[50px] bg-white/40 my-2' style={{ height: barHeight }}></div>
+                                </div>
+                                {/* Commented user info */}
+                                <div className='w-full flex-col text-xl ml-2'>
+                                    <div className='flex justify-between'>
+                                        <div className='flex items-center gap-x-2'>
+                                            <span className='text-white text-lg font-bold'>{comment.user?.fullName}</span>
+                                            <span className='text-white/40 text-lg'>@{comment.user?.username}・{getDatePosted(comment.createdAt)}</span>
+                                        </div>
+                                        {isMyComment(comment.user?._id) && (<MoreButton comment={comment} post={post} />)}
+                                    </div>
+                                    {/* comment */}
+                                    <div ref={postContainerRef} className='w-full flex gap-x-1 font-semibold'>
+                                        <span className='text-lg whitespace-pre-wrap'>{comment.text}</span>
+                                        {comment.img && (<span className='text-lg'>pic.x.com/randomCode123</span>)}
+                                    </div>
+                                    <div className='w-full flex gap-x-1 mt-4'>
+                                        <span className='text-white/40 text-lg'>Replying to</span>
+                                        <span className='text-primary text-lg'>@{comment.user?.username}</span>
+                                    </div>
+                                </div>                               
+                            </div>
+                        </div>
+                    ))}
+
+                    {/* Send new comment */}
                     <form
                         onSubmit={handlePostComment}
                         className='flex flex-col gap-3 px-5 bg-black rounded-bl-[18px] rounded-br-[18px]' 
                     >
                         <div className='flex pt-4'>
                             {/* User image */}
-                            <div className='w-11 h-11 rounded-full'>
-                                <img src={authUser.profileImg || '../../../../public/avatars/user-default.png'} />
+                            <div className='w-11 h-11 rounded-xl'>
+                                <img src={authUser.profileImg || '../../../../public/avatars/user-default.png'} className='w-11 h-11 rounded-full' />
                             </div>
                             {/* Comment area */}
                             <textarea
@@ -162,6 +200,18 @@ const CommentPostModal = ({ post }) => {
                                 placeholder='Post your reply' 
                                 className='textarea w-full min-h-[110px] px-3 text-2xl font-medium resize-none border-none focus:outline-none bg-black' 
                             />
+                            {/* Image */}
+                            {img && (
+                                <div className='w-full flex justify-center items-center'>
+                                    <div className='relative w-full h-auto m-x-auto'>
+                                        <IoCloseSharp
+                                            onClick={() => { setImage(null); imageRef.current.value = null; }}
+                                            className='absolute top-1 right-1 text-white bg-gray-800 rounded-full w-10 h-10 p-2 cursor-pointer'
+                                        />
+                                        <img src={img} className='w-full max-auto object-contain rounded-[15px]' />
+                                    </div>
+                                </div>
+                            )}
                         </div>
                         {/* Options */}
                         <div id='options' className='flex justify-between items-center py-2'>
@@ -178,41 +228,11 @@ const CommentPostModal = ({ post }) => {
                             </div>
                             <input type='file' accept='image/*' hidden ref={imageRef} onChange={handleImgChange} />
                             <button className={`btn btn-primary rounded-full text-white text-lg font-black my-1 px-6 ${comment || img ? 'active' : 'disabled brightness-50'}`}>
-                            {isCommenting ? <LoadingSpinner size='md' /> : 'Reply'}
+                                {isCommenting ? <LoadingSpinner size='md' /> : 'Reply'}
                             </button>
                         </div>
                     </form>
                 </div>
-
-                {/* Close button */}
-                <form method='dialog' className='modal-backdrop'>
-                    <button
-                        onClick={() => document.getElementById(`comment_modal_${post._id}`).close()} 
-                        className='outline-none'
-                    >
-                        <RiCloseLine />
-                    </button>
-                </form>
-
-                {/* Others comments */}
-                {post.comments.map((comment) => (
-                            <div key={comment._id} className='flex-gap-2 items-start'>
-                                {/* Avatar */}
-                                <div className='avatar'>
-                                    <div className='w-8 rounded-full'>
-                                        <img src={comment.user.profileImg || userDefaultImg } />
-                                    </div>
-                                </div>
-                                {/* User info */}
-                                <div className='flex flex-col'>
-                                    <div className='flex items-center gap-1'>
-                                        <span className='font-bold'>{comment.user.fullName}</span>
-                                        <span className='text-gray-700 text-sm'>@{comment.user.username}</span>
-                                    </div>
-                                    <div className='text-lg'>{comment.text}</div>
-                                </div>                                
-                            </div>
-                        ))}
             </dialog>
             
         </>

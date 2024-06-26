@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import PostGenerator from './post/PostGenerator'
-import PostSkeleton from '../skeletons/PostSkeleton'
+import LoadingSpinner from '../loading/LoadingSpinner'
 
 const PostsSection = ({ feedType, username, userId }) => {
     const getPostEndpoint = () => {
@@ -54,10 +54,8 @@ const PostsSection = ({ feedType, username, userId }) => {
     return (
         <> 
             {(isLoading || isRefetching) && (
-                <div>
-                    <PostSkeleton />
-                    <PostSkeleton />
-                    <PostSkeleton />
+                <div className='w-full h-auto flex justify-center'>
+                    <LoadingSpinner />
                 </div>
             )}
             {!isLoading && !isRefetching && posts?.length === 0 && (

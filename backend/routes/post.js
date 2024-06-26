@@ -7,6 +7,7 @@ import {
     likeUnlikePost, 
     commentOnPost, 
     deletePost,
+    deleteComment,
     getFollowingPosts,
     getUserPosts,
 } from '../controllers/post.js';
@@ -19,6 +20,7 @@ router.post("/create", protectRoute, createPost);
 router.post("/like/:id", protectRoute, likeUnlikePost);
 router.post("/comment/:id", protectRoute, commentOnPost);
 router.delete("/:id", protectRoute, deletePost);
+router.delete("/comment/:id", protectRoute, deleteComment);
 router.get("/following", protectRoute, getFollowingPosts);
 router.get("/user/:username", protectRoute, getUserPosts);
 
