@@ -4,9 +4,12 @@ import { RiCloseLine } from 'react-icons/ri'
 import { MdOutlineAddAPhoto } from 'react-icons/md'
 
 const ProfileEditorModal = ({ authUser, user }) => {
+	const isMyProfile = authUser._id === user?._id;
+	const { updateProfile, isUpdatingProfile } = useUpdateUserProfile();
+	const coverImgRef = useRef(null);
+	const profileImgRef = useRef(null);
 	const [coverImg, setCoverImg] = useState(null);
 	const [profileImg, setProfileImg] = useState(null);
-
 	const [formData, setFormData] = useState({
 		fullName: "",
 		username: "",
@@ -15,24 +18,22 @@ const ProfileEditorModal = ({ authUser, user }) => {
 		link: "",
 		newPassword: "",
 		currentPassword: "",
+		coverImg: "",
+		profileImg: "",
 	});
 
-	const { updateProfile, isUpdatingProfile } = useUpdateUserProfile();
-
-	const handleInputChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
-
-	const isMyProfile = authUser._id === user?._id;
-	const coverImgRef = useRef(null);
-	const profileImgRef = useRef(null);
     const handleImgChange = (e, state) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                state === 'coverImg' && setCoverImg(reader.result);
-                state === 'profileImg' && setProfileImg(reader.result);
+                if (state === 'coverImg') {
+                    setCoverImg(reader.result);
+                    setFormData((prevData) => ({ ...prevData, coverImg: reader.result }));
+                } else if (state === 'profileImg') {
+                    setProfileImg(reader.result);
+                    setFormData((prevData) => ({ ...prevData, profileImg: reader.result }));
+                }
             };
             reader.readAsDataURL(file);
         }
@@ -40,9 +41,14 @@ const ProfileEditorModal = ({ authUser, user }) => {
 
 	const handleCoverImgClear = () => {
 		setCoverImg(null);
+		setFormData((prevData) => ({ ...prevData, coverImg: "" }));
 		coverImgRef.current.value = null;
 	};
 
+	const handleInputChange = (e) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
+	
 	useEffect(() => {
 		if (authUser) {
 			setFormData({
@@ -60,14 +66,14 @@ const ProfileEditorModal = ({ authUser, user }) => {
 	return (
 		<>
 			<button
-				className='btn border-[0.5px] px-5 border-gray-400 bg-black hover:border-gray-400 rounded-full btn-md text-lg font-extrabold'
+				className='btn border-[1px] px-5 border-gray-500 bg-black hover:border-gray-400 rounded-full btn-md text-lg font-extrabold'
 				onClick={() => document.getElementById("edit_profile_modal").showModal()}
 			>
 				Edit profile
 			</button>
 			<dialog id='edit_profile_modal' className='modal'>
 				<div className='modal-box border rounded-[20px] border-gray-700 shadow-md p-0'>
-					<div className='flex flex-col gap-4'>
+					<div className='flex flex-col gap-4 mb-8'>
 						{/* Header */}
 						<div className='sticky top-0 left-0 py-3 px-4 flex justify-between items-center w-full bg-black/80 backdrop-blur-sm z-10'>
 							<div className='flex justify-between items-center gap-10'>
@@ -78,6 +84,7 @@ const ProfileEditorModal = ({ authUser, user }) => {
 								</div>
 								<h3 className='font-extrabold text-2xl'>Edit Profile</h3>
 							</div>
+							{/* Save button */}
 							<button 
 								onClick={() => updateProfile(formData)}
 								className='btn bg-white hover:bg-white/90 text-lg text-black rounded-full btn-md px-6'
@@ -97,7 +104,10 @@ const ProfileEditorModal = ({ authUser, user }) => {
 									</div>
 									<div className='w-12 h-12 flex justify-center items-center bg-black/50 rounded-full cursor-pointer'>
 										{isMyProfile && (
-											<RiCloseLine onClick={handleCoverImgClear} className='w-6 h-6 text-gray-200' />
+											<RiCloseLine 
+												onClick={handleCoverImgClear} 
+												className='w-6 h-6 text-gray-200' 
+											/>
 										)}
 									</div>
 									<input
@@ -105,6 +115,7 @@ const ProfileEditorModal = ({ authUser, user }) => {
 										hidden
 										accept='image/*'
 										ref={coverImgRef}
+										name='coverImage'
 										onChange={(e) => handleImgChange(e, "coverImg")}
 									/>
 								</div>
@@ -118,7 +129,10 @@ const ProfileEditorModal = ({ authUser, user }) => {
 									<div className='absolute top-8 left-8 flex justify-center items-center gap-x-5 z-10'>
 										<div className='w-12 h-12 flex justify-center items-center bg-black/50 rounded-full cursor-pointer'>
 											{isMyProfile && (
-												<MdOutlineAddAPhoto onClick={() => profileImgRef.current.click()} className='w-6 h-6 text-gray-200' />
+												<MdOutlineAddAPhoto 
+													onClick={() => profileImgRef.current.click()} 
+													className='w-6 h-6 text-gray-200'
+												/>
 											)}
 										</div>
 										<input
@@ -126,6 +140,7 @@ const ProfileEditorModal = ({ authUser, user }) => {
 											hidden
 											accept='image/*'
 											ref={profileImgRef}
+											name='profileImage'
 											onChange={(e) => handleImgChange(e, "profileImg")}
 										/>
 									</div>

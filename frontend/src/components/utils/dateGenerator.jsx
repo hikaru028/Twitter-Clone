@@ -20,7 +20,8 @@ export const getDatePosted = (createdAt) => {
     }
 }
 
-export const getDateUserJoined = (CreatedAt) => {
+export const getDateUserJoined = (createdAt) => {
+    if (!createdAt) return 'N/A';
     const date = new Date(createdAt);
     const months = [
         "January",

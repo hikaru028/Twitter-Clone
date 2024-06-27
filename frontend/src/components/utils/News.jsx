@@ -1,8 +1,4 @@
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import RightPanelSkeleton from '../skeletons/RightPanelSkeleton'
-// import LoadingSpinner from '../loading/LoadingSpinner'
-// import useFollow from '../../hooks/useFollow'
 import { RiMoreFill } from 'react-icons/ri'
 import newsImage from '../../../public/images/news1.jpg'
 
@@ -11,14 +7,6 @@ const News = () => {
         <div className='border border-gray-700 rounded-[15px] mt-6 overflow-hidden'>
             <p className='text-2xl font-black p-4 pl-7'>Who to follow</p>
             <div>
-                {/* Skeletons */}
-                {/* <div>
-                    <RightPanelSkeleton />
-                    <RightPanelSkeleton />
-                    <RightPanelSkeleton />
-                    <RightPanelSkeleton />
-                </div> */}
-
                 {/* Top news */}
                 <Link
                     to='/'
@@ -46,7 +34,7 @@ const News = () => {
                 {/* Other news */}
                 <Link
                     to={`/profile/user.username`}
-                    key='user._id'
+                    key='user?._id'
                     className='flex items-start justify-between py-3 pr-4 pl-7 cursor-pointer hover:bg-[#16181C] transition-all duration-200' 
                 >
                     <div className='flex gap-2 items-center'>
@@ -71,7 +59,7 @@ const News = () => {
                 </Link>
                 <Link
                     to={`/profile/user.username`}
-                    key='user._id'
+                    key='user?._id'
                     className='flex items-start justify-between py-3 pr-4 pl-7 cursor-pointer hover:bg-[#16181C] transition-all duration-200' 
                 >
                     <div className='flex gap-2 items-center'>
@@ -96,7 +84,7 @@ const News = () => {
                 </Link>
                 <Link
                     to={`/profile/user.username`}
-                    key='user._id'
+                    key='user?._id'
                     className='flex items-start justify-between py-3 pr-4 pl-7 cursor-pointer hover:bg-[#16181C] transition-all duration-200' 
                 >
                     <div className='flex gap-2 items-center'>

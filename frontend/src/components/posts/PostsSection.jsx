@@ -47,7 +47,7 @@ const PostsSection = ({ feedType, username, userId }) => {
 
     useEffect(() => {
 		refetch();
-	}, [feedType, refetch, username]);
+	}, [feedType, username, refetch]);
 
     const sortedPosts = posts ? [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : [];
 
@@ -59,12 +59,14 @@ const PostsSection = ({ feedType, username, userId }) => {
                 </div>
             )}
             {!isLoading && !isRefetching && posts?.length === 0 && (
-                <p>No posts in this tab.</p>
+                <div className='w-full flex justify-center'>
+                    <p>No posts in this tab.</p>
+                </div>
             )}
             {!isLoading && !isRefetching && posts && (
                 <div>
                     {sortedPosts.map((post) => (
-                        <PostGenerator key={post._id} post={post} />
+                        <PostGenerator key={post?._id} post={post} />
                     ))}
                 </div>
             )}

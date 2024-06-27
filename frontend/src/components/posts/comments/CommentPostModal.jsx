@@ -17,7 +17,7 @@ import userDefaultImg from '../../../../public/avatars/user-default.png'
 
 const CommentPostModal = ({ post }) => {
     const { data: authUser } = useQuery({ queryKey: ['authUser'] });
-    const postOwner = post.user;
+    const postOwner = post?.user;
     const [comment, setComment] = useState('');
     const [barHeight, setBarHeight] = useState(0);
     const [img, setImage] = useState(null);
@@ -25,14 +25,14 @@ const CommentPostModal = ({ post }) => {
     const textareaRef = useRef(null);
     const postContainerRef = useRef(null);
     const queryClient = useQueryClient();
-    const postedDate = getDatePosted(post.createdAt);
+    const postedDate = getDatePosted(post?.createdAt);
 
     const isMyComment = (commentUserId) => commentUserId === authUser._id;
 
     const { mutate: commentPost, isPending: isCommenting } = useMutation({
 		mutationFn: async ({ comment, img }) => {
 			try {
-				const res = await fetch(`/api/posts/comment/${post._id}`, {
+				const res = await fetch(`/api/posts/comment/${post?._id}`, {
 					method: "POST",
 					headers: {"Content-Type": "application/json"},
 					body: JSON.stringify({ text: comment, img: img }),
@@ -51,7 +51,7 @@ const CommentPostModal = ({ post }) => {
 			setComment('');
             setBarHeight(0);
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
-            document.getElementById(`comment_modal_${post._id}`).close();
+            document.getElementById(`comment_modal_${post?._id}`).close();
 		},
 		onError: (error) => {
 			toast.error(error.message);
@@ -123,7 +123,7 @@ const CommentPostModal = ({ post }) => {
                             {/* Posted user image */}
                             <div className='avatar flex-col justify-center items-center'>
                                 <div className='w-11 h-11 rounded-full'>
-                                    <img src={postOwner.profileImg || userDefaultImg} />
+                                    <img src={postOwner?.profileImg || userDefaultImg} />
                                 </div>
                                 {/* Left bar */}
                                 <div className='w-[1.5px] min-h-[50px] bg-white/40 my-2' style={{ height: barHeight }}></div>
@@ -131,17 +131,17 @@ const CommentPostModal = ({ post }) => {
                             {/* Posted user info */}
                             <div className='w-full flex-col text-xl ml-2'>
                                 <div className='flex items-center gap-x-2'>
-                                    <span className='text-white text-lg font-bold'>{postOwner.fullName}</span>
-                                    <span className='text-white/40 text-lg'>@{postOwner.username}・{postedDate}</span>
+                                    <span className='text-white text-lg font-bold'>{postOwner?.fullName}</span>
+                                    <span className='text-white/40 text-lg'>@{postOwner?.username}・{postedDate}</span>
                                 </div>
                                 {/* posted content */}
                                 <div ref={postContainerRef} className='w-full flex gap-x-1 font-semibold'>
-                                    <span className='text-lg whitespace-pre-wrap'>{post.text}</span>
-                                    {post.img && (<span className='text-lg'>pic.x.com/randomCode123</span>)}
+                                    <span className='text-lg whitespace-pre-wrap'>{post?.text}</span>
+                                    {post?.img && (<span className='text-lg'>pic.x.com/randomCode123</span>)}
                                 </div>
                                 <div className='w-full flex gap-x-1 mt-4'>
                                     <span className='text-white/40 text-lg'>Replying to</span>
-                                    <span className='text-primary text-lg'>@{postOwner.username}</span>
+                                    <span className='text-primary text-lg'>@{postOwner?.username}</span>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,7 @@ const CommentPostModal = ({ post }) => {
                                     <div className='flex justify-between'>
                                         <div className='flex items-center gap-x-2'>
                                             <span className='text-white text-lg font-bold'>{comment.user?.fullName}</span>
-                                            <span className='text-white/40 text-lg'>@{comment.user?.username}・{getDatePosted(comment.createdAt)}</span>
+                                            <span className='text-white/40 text-lg'>@{comment.user?.username}・{getDatePosted(comment?.createdAt)}</span>
                                         </div>
                                         {isMyComment(comment.user?._id) && (<MoreButton comment={comment} post={post} />)}
                                     </div>
@@ -190,7 +190,7 @@ const CommentPostModal = ({ post }) => {
                         <div className='flex pt-4'>
                             {/* User image */}
                             <div className='w-11 h-11 rounded-xl'>
-                                <img src={authUser.profileImg || '../../../../public/avatars/user-default.png'} className='w-11 h-11 rounded-full' />
+                                <img src={authUser?.profileImg || '../../../../public/avatars/user-default.png'} className='w-11 h-11 rounded-full' />
                             </div>
                             {/* Comment area */}
                             <textarea

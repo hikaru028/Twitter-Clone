@@ -6,7 +6,7 @@ const BodySection = ({ post }) => {
             <img 
                 src={post.img} 
                 alt='' 
-                className='h-80 object-contain rounded-lg border border-gray-700' 
+                className='h-auto object-contain w-auto max-w-full rounded-lg border border-gray-700' 
             />
         )}
     </div>

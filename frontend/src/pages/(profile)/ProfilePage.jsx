@@ -34,9 +34,9 @@ const ProfilePage = () => {
         }
     });
     
-    useEffect(() => {
+    useEffect(() => { // when changing username in the parameter, refetch the page
         refetch();
-    }, [username, refetch]);
+    }, [username, user, refetch]);
 
     return (
         <div className='flex-[4_4_0] mr-auto border-r border-gray-700 lg:min-w-[600px] min-h-screen'>

@@ -37,18 +37,20 @@ const AllNotifications = () => {
                 }
                 {notifications?.map((notification) => (
                     <div className='border-b border-gray-700 hover:bg-secondary/50 cursor-pointer' key={notification._id}>
-                        <div className='flex gap-3 p-4'>
+                        <div className='flex gap-3 py-4 px-8'>
                             {notification.type === "follow" && <BsPersonFill className='w-9 h-9 text-primary' />}
                             {notification.type === "like" && <IoHeartSharp className='w-9 h-9 text-pink-600' />}
                             <Link to={`/profile/${notification.from.username}`}>
                                 <div className='avatar'>
                                     <div className='w-9 rounded-full'>
-                                        <img src={notification.from.profileImg || "/avatar-placeholder.png"} />
+                                        <img src={notification.from.profileImg || "../../../public/avatars/user-default.png"} />
                                     </div>
                                 </div>
                                 <div className='flex gap-1 text-lg font-medium mt-2'>
-                                    <p className='font-bold'>{notification.from.fullName}{}</p>
-                                    {notification.type === "follow" ? "followed you" : "liked your post"}
+                                    <p className='font-bold hover:underline text-white'>{notification.from.fullName}</p>
+                                    <p className=''>
+                                        {notification.type === "follow" ? "followed you" : "liked your post"}
+                                    </p>
                                 </div>
                             </Link>
                         </div>

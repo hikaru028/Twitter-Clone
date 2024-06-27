@@ -5,9 +5,9 @@ import { generateTokenAndSetCoolie } from '../lib/utils/generateToken.js';
 
 export const signup = async (req, res) => {
     try {
-        console.log('Headers:', req.headers); // Log headers
-        console.log('Content-Type:', req.get('Content-Type')); // Log Content-Type
-        console.log('Request body:', req.body); // Log the entire request bod
+        // console.log('Headers:', req.headers); // Log headers
+        // console.log('Content-Type:', req.get('Content-Type')); // Log Content-Type
+        // console.log('Request body:', req.body); // Log the entire request bod
 
         const { email, username, fullName, password } = req.body;
 

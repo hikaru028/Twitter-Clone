@@ -8,7 +8,7 @@ const HomePage = () => {
     return (
         <div className='flex-[4_4_0] mr-auto border-r border-gray-700 lg:min-w-[600px] min-h-screen'>
               {/* Header */}
-              <div className='flex w-full h-16 items-center border-b border-gray-700'>
+              <div className='sticky top-0 left-0 flex w-full h-16 items-center border-b border-gray-700 bg-black/60 backdrop-blur-md z-20'>
                   <div
                     className={`flex justify-center flex-1 p-5 hover:bg-secondary transition duration-300 cursor-pointer relative text-xl ${feedType === "forYou" ? 'font-black text-white' : 'font-semibold text-gray-700'}`}
                     onClick={() => setFeedType("forYou")}

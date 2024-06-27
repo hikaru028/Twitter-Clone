@@ -43,7 +43,7 @@ const RecommendedUsers = () => {
                 {!isLoading && suggestedUsers?.map((user) => (
                     <Link
                         to={`/profile/${user.username}`}
-                        key={user._id}
+                        key={user?._id}
                         className='flex items-center justify-between py-3 pr-4 pl-7 cursor-pointer hover:bg-[#16181C] transition-all duration-200' 
                     >
                         {/* User info */}

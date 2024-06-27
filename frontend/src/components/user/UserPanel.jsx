@@ -13,7 +13,7 @@ const UserPanel = () => {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     const { mutate: logout } = useMutation({
-        mutationFc: async () => {
+        mutationFn: async () => {
             try {
                 const res = await fetch("/api/auth/logout", { method: "POST" });
                 const data = await res.json();
@@ -99,7 +99,10 @@ const UserPanel = () => {
                                 <li
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        logout();
+                                        const confirmLogout = window.confirm("Are you sure you want to logout?");
+                                        if (confirmLogout) {
+                                            logout();
+                                        }
                                     }}
                                     className='text-xl font-extrabold hover:bg-stone-900 transition-all duration-200 py-3 px-4 cursor-pointer'
                                 >

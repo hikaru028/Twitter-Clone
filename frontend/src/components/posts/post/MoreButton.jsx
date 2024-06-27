@@ -13,14 +13,14 @@ import { IoIosStats } from "react-icons/io"
 const MoreButton = ({ post }) => {
     const { data: authUser } = useQuery({ queryKey: ['authUser'] });
     const queryClient = useQueryClient();
-    const isMyPost = authUser._id === post.user._id;
+    const isMyPost = authUser?._id === post.user?._id;
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const postPopupRef = useRef(null);
     const moreOptions = [
-        { icon: FaUserXmark, title: `Unfollow @${post.user.username}`},
-        { icon: MdOutlinePostAdd, title: `Add/remove @${post.user.username} from Lists`},
-        { icon: BiVolumeMute, title: `Mute @${post.user.username}`},
-        { icon: MdBlock, title: `Block @${post.user.username}`},
+        { icon: FaUserXmark, title: `Unfollow @${post.user?.username}`},
+        { icon: MdOutlinePostAdd, title: `Add/remove @${post.user?.username} from Lists`},
+        { icon: BiVolumeMute, title: `Mute @${post.user?.username}`},
+        { icon: MdBlock, title: `Block @${post.user?.username}`},
         { icon: IoIosStats, title: 'View post engagements'},
         { icon: RiCodeSSlashFill, title: 'Embed post'},
         { icon: RiFlag2Line, title: 'Report post'},
@@ -29,7 +29,7 @@ const MoreButton = ({ post }) => {
     const { mutate: deletePost } = useMutation({
         mutationFn: async () => {
             try {
-                const res = await fetch(`/api/posts/${post._id}`, {
+                const res = await fetch(`/api/posts/${post?._id}`, {
                     method: 'DELETE',
                 });
                 const data = await res.json();
