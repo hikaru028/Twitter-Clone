@@ -38,7 +38,7 @@ function App() {
   }
 
   return (
-    <div className='flex max-w-6xl m-auto'>
+    <div className='flex justify-center mx-auto'>
       {authUser && <Navigation /> }
        <Routes>
         <Route path='/' element={authUser ? <HomePage /> : <Navigate to='/login' />} />

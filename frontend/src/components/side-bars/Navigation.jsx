@@ -38,27 +38,25 @@ const Navigation = () => {
     }
 
   return (
-    <div className='flex md:flex-[2_2_0] w-18 max-w-52'>
-        <div className='sticky top-0 left-0 h-screen flex flex-col justify-between items-center border-r border-gray-700 w-[100px] md:w-full pr-36'>
-            <ul className='flex flex-col gap-3 mt-1 mb-2'>
-                {/* Logo */}
-                <Link to='/' className='flex justify-center items-center max-w-fit hover:bg-stone-900 transition-all rounded-full duration-200 cursor-pointer'>
-                    <FaXTwitter className='w-9 h-9 m-3' />
-                </Link>
+    <div className='sticky top-0 left-0 h-screen border-r border-gray-700 overflow-hidden min-w-[70px] lg:min-w-[300px] z-50'> 
+        <div className=''>
+            {/* Logo */}
+            <Link to='/' className='w-14 h-14 flex justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 cursor-pointer ml-4 lg:ml-0 z-50 mb-5'>
+                <FaXTwitter className='w-9 h-9' />
+            </Link>
 
-                {/* Navigation */}
-                {navList.map((item, index) => (
-                    <li key={index} onClick={() => handleClick(item.path)} className='nav-list'>
-                        <Link to={item.path} className='nav-link'>
-                            {selectedItem === item.path ? <item.icon2 className='w-9 h-9' /> : <item.icon className='w-9 h-9' />}
-                            <span className={`nav-text ${selectedItem === item.path ? 'font-extrabold' : 'font-medium'}`}>{item.text}</span>
-                        </Link>
-                    </li>
-                ))}
-    
-                {/* Post button */}
-                <CreatePostModal />
-            </ul>
+            {/* Navigation */}
+            {navList.map((item, index) => (
+                <div key={index} onClick={() => handleClick(item.path)} className='flex justify-center lg:justify-start mb-4'>
+                    <Link to={item.path} className='flex flex-row justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 p-3 max-w-fit cursor-pointer'>
+                        {selectedItem === item.path ? <item.icon2 className='w-8 h-8' /> : <item.icon className='w-8 h-8' />}
+                        <span className={`text-2xl hidden lg:block md:px-4 ${selectedItem === item.path ? 'font-extrabold' : 'font-medium'}`}>{item.text}</span>
+                    </Link>
+                </div>
+            ))}
+
+            {/* Post button */}
+            <CreatePostModal />
             {/* User panel */}
             <UserPanel />
         </div>

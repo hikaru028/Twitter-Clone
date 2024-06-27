@@ -36,7 +36,6 @@ const RecommendedUsers = () => {
                         <RightPanelSkeleton />
                         <RightPanelSkeleton />
                         <RightPanelSkeleton />
-                        <RightPanelSkeleton />
                     </div>
                 )}
 

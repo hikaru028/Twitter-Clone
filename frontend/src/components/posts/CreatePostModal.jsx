@@ -68,11 +68,12 @@ const CreatePostModal = () => {
         <>
             <button 
                 onClick={() => document.getElementById('create_post_dialog').showModal()}
-                className='flex justify-center items-center mt-5 w-[55px] md:w-[230px] h-[55px] btn rounded-full btn-primary text-white'
+                className='flex justify-center items-center w-[55px] lg:w-[230px] h-[55px] ml-2 rounded-full bg-primary hover:brightness-[80%] transition-all duration-200 text-white mt-7'
             >
-                <p className='hidden md:block md:text-2xl md:font-bold'>Post</p>
-                <RiQuillPenFill className='w-9 h-9 md:hidden' />
+                <p className='hidden lg:block lg:text-2xl lg:font-bold'>Post</p>
+                <RiQuillPenFill className='w-9 h-9 lg:hidden' />
             </button> 
+            {/* Dialog */}
             <dialog id='create_post_dialog' className='modal border-none outline-none bg-slate-400/30 flex items-start'>
                 <div className='w-[600px] min-h-10 flex-col items-start bg-black mx-auto mt-12 rounded-[20px]'>
                     <div className='w-full flex flex-col pt-4 px-6 items-start gap-4'>

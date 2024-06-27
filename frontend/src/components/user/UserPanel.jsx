@@ -65,30 +65,30 @@ const UserPanel = () => {
   return (
       <>
         {authUser && (
-            <div className='relative inline-block mt-12 mb-4 '>
+            <div className='relative inline-block'>
                 {/* user section */}
-                <div ref={userSectionRef} className='w-auto h-auto flex justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 p-4  cursor-pointer z-0'>
+                <div ref={userSectionRef} className='w-auto h-auto flex justify-center items-center hover:bg-stone-900 transition-all rounded-full duration-200 p-4 mt-16 cursor-pointer z-0'>
                     <div
                         onClick={togglePopup}
-                        className='flex flex-row justify-between items-center md:w-[230px] '
+                        className='flex flex-row justify-between items-center lg:w-[230px] mx-auto'
                     >
                         <div className='avatar md:inline-flex'>
                             <div className='w-12 rounded-full'>
                                 <img src={authUser?.profileImg || '../../../public/avatars/user-default.png'} />
                             </div>
                         </div>
-                            <div className='hidden md:block mr-2'>
+                            <div className='hidden lg:block mr-2'>
                                 <p className='text-white font-bold text-xl max-w-[120px] truncate'>{authUser?.fullName}</p>
                                 <p className='text-slate-500 text-xl'>@{authUser?.username}</p>
                             </div>
-                            <RiMoreFill className='hidden md:block w-6 h-6 font-semibold cursor-pointer' />    
+                            <RiMoreFill className='hidden lg:block w-6 h-6 font-semibold cursor-pointer' />    
                     </div>
                 </div>
         
                 {/* Popup */}
                 {isPopupVisible && (
-                    <div ref={popupRef} className='absolute bottom-24 right-0 z-20'>
-                        <div className='relative w-[320px] h-[120px] bg-black flex flex-col justify-center rounded-[18px] z-10 overflow-hidden'>
+                    <div ref={popupRef} className='absolute bottom-24 left-1 z-50'>
+                        <div className='relative w-[290px] h-[120px] bg-black flex flex-col justify-center rounded-[18px] z-10 overflow-hidden'>
                             <ul className=''>
                                 <li 
                                     onClick={renderLoginPage}

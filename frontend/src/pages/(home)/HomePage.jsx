@@ -6,7 +6,7 @@ const HomePage = () => {
     const [feedType, setFeedType] = useState('forYou');
 
     return (
-        <div className='flex-[4_4_0] mr-auto border-r border-gray-700 lg:min-w-[600px] min-h-screen'>
+        <div className='border-r border-gray-700 md:w-[600px]'>
               {/* Header */}
               <div className='sticky top-0 left-0 flex w-full h-16 items-center border-b border-gray-700 bg-black/60 backdrop-blur-md z-20'>
                   <div
