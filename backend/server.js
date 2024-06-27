@@ -14,7 +14,6 @@ import connectMongoDB from './db/connectMongoDB.js';
 // Load environment variables from .env file
 dotenv.config();
 
-
 // Connect to my Cloudinary account
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -38,7 +37,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
-app.use("/api/notifications", NotificationRoute)
+app.use("/api/notifications", NotificationRoute);
 
 // Start server and connect to database
 app.listen(port, () => {
