@@ -1,4 +1,3 @@
-import multer from 'multer';
 import User from '../models/userSchema.js';
 import Post from '../models/postSchema.js';
 import Notification from '../models/notificationSchema.js';

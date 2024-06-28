@@ -1,8 +1,4 @@
-import bcrypt from 'bcryptjs';
-import { v2 as cloudinary } from 'cloudinary';
-import User from '../models/userSchema.js';
 import Notification from '../models/notificationSchema.js';
-import passwordSchema from '../models/passwordSchema.js';
 
 export const getNotifications = async (req, res) => {    
     try {

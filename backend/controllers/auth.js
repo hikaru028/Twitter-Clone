@@ -1,14 +1,10 @@
-import User from '../models/userSchema.js';
 import bcrypt from 'bcryptjs';
 import passwordSchema from '../models/passwordSchema.js';
-import { generateTokenAndSetCoolie } from '../lib/utils/generateToken.js';
+import User from '../models/userSchema.js';
+import { generateTokenAndSetCookie } from '../lib/utils/generateToken.js';
 
 export const signup = async (req, res) => {
     try {
-        // console.log('Headers:', req.headers); // Log headers
-        // console.log('Content-Type:', req.get('Content-Type')); // Log Content-Type
-        // console.log('Request body:', req.body); // Log the entire request bod
-
         const { email, username, fullName, password } = req.body;
 
         // Check username existence
@@ -53,7 +49,7 @@ export const signup = async (req, res) => {
             await newUser.save();
 
             // Generate token and set cookie
-            generateTokenAndSetCoolie(newUser._id, res);
+            generateTokenAndSetCookie(newUser._id, res);
 
             res.status(201).json({
                 _id: newUser._id,
@@ -84,7 +80,7 @@ export const login = async (req, res) => {
         if (!user || !isPasswordCorrect) {
             return res.status(400).json({ error: 'Invalid username or password' });
         } else {
-            generateTokenAndSetCoolie(user._id, res);
+            generateTokenAndSetCookie(user._id, res);
 
             return res.status(200).json({
                 _id: user._id,

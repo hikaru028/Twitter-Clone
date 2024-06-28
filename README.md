@@ -1,7 +1,7 @@
 # Twitter Clone in React + Vite
 
 A full-stack Twitter clone application built using Express, MongoDB, and Vite with React.
-Furthermore, it includes 
+Furthermore, it includes
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Furthermore, it includes
 
 ## Features
 
--  Authentication and authorisation with JSONWEBTOKENS (JWT)
+- Authentication and authorisation with JSONWEBTOKENS (JWT)
 - React Query for Data Fetching, Caching etc.
 - Suggested Users to Follow
 - Post creation, editing, and deletion
@@ -30,6 +30,7 @@ Furthermore, it includes
 ## Technologies Used
 
 - Backend:
+
   - Node.js
   - Express.js
   - MongoDB
@@ -38,12 +39,13 @@ Furthermore, it includes
   - Cloudinary (for image uploads)
 
 - Frontend:
+
   - React
   - React Router
   - React Query
   - Tailwind CSS
   - Vite
- 
+
 - Test:
   - Jest / Supertest
 
@@ -64,21 +66,27 @@ Make sure you have the following installed:
    git clone https://github.com/yourusername/twitter-clone.git
    cd twitter-clone
 
+   ```
+
 2. **Install backend dependencies:**
 
    ```sh
    npm install
-   
+
+   ```
+
 3. **Clone the repository:**
 
    ```sh
    cd ../frontend
    npm install
+   ```
 
 ## Running the Application
 
 1. **Setup environment variables:**
    Create a `.env` file in the root directory and add your MongoDB connection string, JWT secret, and Cloudinary credentials.
+
    ```sh
     PORT=8000
     MONGO_URI=your_mongodb_uri
@@ -89,32 +97,51 @@ Make sure you have the following installed:
     CLOUDINARY_API_KEY=your_cloudinary_api_key
     CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
+   ```
+
 2. **Start the backend server:**
 
    ```sh
    npm run dev
-   
+
+   ```
+
 3. **Start the frontend development server:**
    Make sure you are in the `/fronend` directory
+
    ```sh
    npm run dev
+
+   ```
 
 4. **Access the application:**
    Open your browser and go to http://localhost:3000
 
 ## Testing the Application
-   Setup for Jest and Supertest
+
+Setup for Jest and Supertest
+
 1. **Install Jest and Supertest:**
+
    ```sh
     npm install --save-dev jest supertest
+
+   ```
 
 2. **Run the tests:**
    Make sure you are in the `/root` directory
    ```sh
+   npx jest --config jest.config.cjs
+   ```
+   or
+   ```sh
    npm test
+   ```
 
 ## Contributing
+
 Contributions are welcome! Please fork this repository and create a pull request with your changes. Make sure to follow the code style and include tests for any new features.
 
 ## License
+
 This project is licensed under the MIT License. See the `LICENSE.txt` file for details.

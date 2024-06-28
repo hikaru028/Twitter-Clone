@@ -16,31 +16,41 @@ dotenv.config();
 
 // Connect to my Cloudinary account
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Create Express app
-const app = express();
-const port = process.env.PORT || 8000;
+// Function to create and configure the server
+const createServer = () => {
+  // Create Express app
+  const app = express();
+  const port = process.env.PORT || 8000;
 
-// Increase the payload size limit
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-// Middleware to parse JSON and URL-encoded data
-app.use(express.json({ limit: '50mb' })); // To parse req.body but do not too large due to DoS attack
-app.use(express.urlencoded({ extended: true })); // To parse from data
-app.use(cookieParser());
+  // Increase the payload size limit
+  app.use(bodyParser.json({ limit: '50mb' }));
+  app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+  // Middleware to parse JSON and URL-encoded data
+  app.use(express.json({ limit: '50mb' })); // To parse req.body but do not too large due to DoS attack
+  app.use(express.urlencoded({ extended: true })); // To parse from data
+  app.use(cookieParser());
 
-// Use routes imported
-app.use("/api/auth", authRoute);
-app.use("/api/users", userRoute);
-app.use("/api/posts", postRoute);
-app.use("/api/notifications", NotificationRoute);
+  // Use routes imported
+  app.use('/api/auth', authRoute);
+  app.use('/api/users', userRoute);
+  app.use('/api/posts', postRoute);
+  app.use('/api/notifications', NotificationRoute);
 
-// Start server and connect to database
-app.listen(port, () => {
+  return app;
+};
+
+// If this file is executed directly, start the server
+if (require.main === module) {
+  const app = createServer();
+  app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
     connectMongoDB();
-});
+  });
+}
+
+export default createServer;

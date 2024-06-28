@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export const generateTokenAndSetCoolie = (userId, res) => {
+export const generateTokenAndSetCookie = (userId, res) => {
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
         expiresIn: `${process.env.EXPIRE_DAYS}d`
     });
