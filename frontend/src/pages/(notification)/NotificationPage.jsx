@@ -23,7 +23,7 @@ const NotificationPage = () => {
     };
     
   return (
-        <div className='flex-[4_4_0] mr-auto border-r border-gray-700 lg:min-w-[600px] min-h-screen'>
+        <div className='md:w-[600px]'>
             <div className='sticky top-0 left-0 flex flex-col w-full bg-black/60 backdrop-blur-md z-20'>
                 {/* Header */}
                 <div className='w-full flex justify-between items-center p-4'>

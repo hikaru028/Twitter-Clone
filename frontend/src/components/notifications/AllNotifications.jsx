@@ -20,7 +20,9 @@ const AllNotifications = () => {
             }
         },
     });
-
+    
+    const sortedNotifications = notifications ? [...notifications].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : [];
+   
     return (
         <>
             {/* Loading */}
@@ -32,10 +34,10 @@ const AllNotifications = () => {
 
             {/* Notifications */}
             <div className='flex flex-col z-0'>
-                {notifications?.length === 0 && 
+                {sortedNotifications?.length === 0 && 
                     <div className='text-center p-4 font-bold'>No notifications</div>
                 }
-                {notifications?.map((notification) => (
+                {sortedNotifications?.map((notification) => (
                     <div className='border-b border-gray-700 hover:bg-secondary/50 cursor-pointer' key={notification._id}>
                         <div className='flex gap-3 py-4 px-8'>
                             {notification.type === "follow" && <BsPersonFill className='w-9 h-9 text-primary' />}

@@ -5,7 +5,7 @@ import RecommendedUsers from '../user/RecommendedUsers'
 
 const RightPanel = () => {
     return (
-        <div className='hidden md:block my-4 ml-8'>
+        <div className='hidden md:block pt-4 pl-8 border-l border-gray-700'>
             <div className='sticky top-0 left-0 bg-black p-6 z-20'>
                 <SearchBox />
             </div>

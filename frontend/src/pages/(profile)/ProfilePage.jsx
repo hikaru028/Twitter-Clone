@@ -39,7 +39,7 @@ const ProfilePage = () => {
     }, [username, user, refetch]);
 
     return (
-        <div className='flex-[4_4_0] mr-auto border-r border-gray-700 lg:min-w-[600px] min-h-screen'>
+        <div className='md:w-[600px]'>
             {(isLoading || isRefetching) && <ProfileHeaderSkeleton />}
             {!isLoading && !isRefetching && !user && <p className='text-center text-lg mt-4'>User not found</p>}
             <div className='sticky top-0 left-0 flex flex-col w-full bg-black/90'>
