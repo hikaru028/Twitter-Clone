@@ -48,6 +48,9 @@ Furthermore, it includes
 
 - Test:
   - Jest / Supertest
+ 
+- Other:
+  - daisyUI
 
 ## Prerequisites
 
