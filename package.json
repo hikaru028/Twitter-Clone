@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "backend/server.js",
   "scripts": {
+    "build": "vite build",
     "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
     "dev-server": "nodemon backend/server.js",
     "dev-client": "npm run dev --prefix frontend",
