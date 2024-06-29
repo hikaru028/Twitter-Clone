@@ -47,8 +47,9 @@ Furthermore, it includes
   - Vite
 
 - Test:
+
   - Jest / Supertest
- 
+
 - Other:
   - daisyUI
 
@@ -102,22 +103,15 @@ Make sure you have the following installed:
 
    ```
 
-2. **Start the backend server:**
+2. **Start the backend server and the frontend development server:**
+   It should run both servers simultaneously.
 
    ```sh
    npm run dev
 
    ```
 
-3. **Start the frontend development server:**
-   Make sure you are in the `/fronend` directory
-
-   ```sh
-   npm run dev
-
-   ```
-
-4. **Access the application:**
+3. **Access the application:**
    Open your browser and go to http://localhost:3000
 
 ## Testing the Application
