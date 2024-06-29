@@ -2,7 +2,7 @@ import request from 'supertest';
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
-import createServer from '../server';
+import createServer from './testserver.js';
 import User from '../models/userSchema';
 
 let server;
