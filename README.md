@@ -3,7 +3,7 @@
 A full-stack Twitter clone application built using Express, MongoDB, and Vite with React.
 Furthermore, it includes
 
-## Table of Contents
+## 📜 Table of Contents
 
 - [Features](#features)
 - [Technologies Used](#technologies-used)
@@ -14,7 +14,7 @@ Furthermore, it includes
 - [Contributing](#contributing)
 - [License](#license)
 
-## Features
+## ✨ Features
 
 - Authentication and authorisation with JSONWEBTOKENS (JWT)
 - React Query for Data Fetching, Caching etc.
@@ -27,7 +27,7 @@ Furthermore, it includes
 - Image Uploads using Cloudinary
 - Real-time notifications and reactions
 
-## Technologies Used
+## 🛠️ Technologies Used
 
 - Backend:
 
@@ -53,7 +53,7 @@ Furthermore, it includes
 - Other:
   - daisyUI
 
-## Prerequisites
+## 🔰 Prerequisites
 
 Make sure you have the following installed:
 
@@ -62,7 +62,7 @@ Make sure you have the following installed:
 - MongoDB
 - Cloudinary
 
-## Installation
+## 📥 Installation
 
 1. **Clone the repository:**
 
@@ -86,7 +86,7 @@ Make sure you have the following installed:
    npm install
    ```
 
-## Running the Application
+## 🏃‍♂️ Running the Application
 
 1. **Setup environment variables:**
    Create a `.env` file in the root directory and add your MongoDB connection string, JWT secret, and Cloudinary credentials.
@@ -114,7 +114,7 @@ Make sure you have the following installed:
 3. **Access the application:**
    Open your browser and go to http://localhost:3000
 
-## Testing the Application
+## ✅ Testing the Application
 
 Setup for Jest and Supertest
 
@@ -135,10 +135,10 @@ Setup for Jest and Supertest
    npm test
    ```
 
-## Contributing
+## 👨‍💻 Contributing
 
 Contributions are welcome! Please fork this repository and create a pull request with your changes. Make sure to follow the code style and include tests for any new features.
 
-## License
+## 📝 License
 
 This project is licensed under the MIT License. See the `LICENSE.txt` file for details.
