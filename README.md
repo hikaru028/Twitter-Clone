@@ -141,4 +141,4 @@ Contributions are welcome! Please fork this repository and create a pull request
 
 ## 📝 License
 
-This project is licensed under the MIT License. See the `LICENSE.txt` file for details.
+This project is licensed under the MIT License. See the [LICENSE.txt](https://github.com/hikaru028/Twitter-Clone/blob/main/LICENSE.txt) file for details.
