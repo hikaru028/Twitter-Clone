@@ -1,7 +1,7 @@
 # Twitter Clone in React + Vite
 
 A full-stack Twitter clone application built using Express, MongoDB, and Vite with React.
-Furthermore, it includes
+Furthermore, it includes:
 
 ## 📜 Table of Contents
 
@@ -19,7 +19,7 @@ Furthermore, it includes
 - Authentication and authorisation with JSONWEBTOKENS (JWT)
 - React Query for Data Fetching, Caching etc.
 - Suggested Users to Follow
-- Post creation, editing, and deletion
+- Post-creation, editing, and deletion
 - Commenting on Posts
 - Liking Posts
 - Edit Profile Info
@@ -67,7 +67,7 @@ Make sure you have the following installed:
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/yourusername/twitter-clone.git
+   git clone https://github.com/hikaru028/Twitter-Clone.git
    cd twitter-clone
 
    ```
