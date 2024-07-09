@@ -135,10 +135,6 @@ Setup for Jest and Supertest
    npm test
    ```
 
-## 👨‍💻 Contributing
-
-Contributions are welcome! Please fork this repository and create a pull request with your changes. Make sure to follow the code style and include tests for any new features.
-
 ## 📝 License
 
 This project is licensed under the MIT License. See the [LICENSE.txt](https://github.com/hikaru028/Twitter-Clone/blob/main/LICENSE.txt) file for details.
