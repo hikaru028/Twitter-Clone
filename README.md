@@ -11,7 +11,6 @@ Furthermore, it includes:
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
 - [Testing the Application](#testing-the-application)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## ✨ Features
